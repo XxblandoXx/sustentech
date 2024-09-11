@@ -1,0 +1,74 @@
+{
+    "agua-cinza": {
+        "title": "Água cinza",
+        "icon": "icon-droplet",
+        "accordion": [
+            {
+                "label": "O que é?",
+                "text": "São águas proveniente de atividades mais simples que podem possuir resíduos de alimentos, produtos de limpeza e concentração baixa de produtos tóxicos."
+            },
+            {
+                "label": "Como captar?",
+                "text": "Alguns exemplos são: sistemas de refrigeração, pias de banheiro, cozinha, chuveiro, água de enxágue de materiais de limpeza."
+            },
+            {
+                "label": "Onde utilizar?",
+                "text": "Pode ser utilizada em bebedouros, pias, chuveiros, torres de resfriamento, sistemas de irrigação e fontes ornamentais, descarga de vasos sanitários e entre outros."
+            }
+        ],
+        "tratamentos": [
+            {
+                "url": "#",
+                "label": "Instalações<br>de reuso"
+            },
+            {
+                "url": "#",
+                "label": "Tratamento<br>Biológico"
+            },
+            {
+                "url": "#",
+                "label": "Tratamento<br>Químico"
+            },
+            {
+                "url": "#",
+                "label": "Tratamento<br>fisico-químico"
+            }
+        ]
+    },
+    "aproveitamento-da-chuva": {
+        "title": "Aproveitamento da chuva",
+        "icon": "icon-rain",
+        "accordion": [
+            {
+                "label": "O que é?",
+                "text": "São águas proveniente de atividades mais simples que podem possuir resíduos de alimentos, produtos de limpeza e concentração baixa de produtos tóxicos."
+            },
+            {
+                "label": "Como captar?",
+                "text": ""
+            },
+            {
+                "label": "Onde utilizar?",
+                "text": ""
+            }
+        ],
+        "tratamentos": [
+            {
+                "url": "#",
+                "label": "Instalações<br>de reuso"
+            },
+            {
+                "url": "#",
+                "label": "Tratamento<br>Biológico"
+            },
+            {
+                "url": "#",
+                "label": "Tratamento<br>Químico"
+            },
+            {
+                "url": "#",
+                "label": "Tratamento<br>fisico-químico"
+            }
+        ]
+    }
+}
