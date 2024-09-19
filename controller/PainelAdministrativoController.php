@@ -18,10 +18,11 @@ class PainelAdministrativoController extends Controller {
     }
 
     public function empresas() {
-        $modelo = self::load_model('Empresa');
-        $usuario = self::load_model('Usuario');
-
         require(PATH_VIEW . '_includes/header.php');
+
+        $modelo = self::load_model('Empresa');
+        $modelo->setUsuario($_SESSION['user']['id']);
+        
         require(PATH_VIEW . 'empresas.php');
         require(PATH_VIEW . '_includes/menubar.php');
         require(PATH_VIEW . '_includes/footer.php');

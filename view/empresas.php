@@ -13,7 +13,13 @@
 	<h2 class="ta-center">Gerenciar Empresas</h2>
 
     <?php if ($modelo->ListarEmpresas()): ?>
-
+    <div class="navigation d-flex fw-wrap fd-md-column ai-md-center jc-center">
+        <?php foreach ($modelo->ListarEmpresas() as $company): ?>
+        <button class="cta cta-to-icon">
+            <i class="icon-gear"></i> <?php echo $company['nome']; ?>
+        </button>
+        <?php endforeach ?>
+    </div>
     <?php else: ?>
         <p class="ta-center">Não há empresas vinculadas a esse perfil.</p>
     <?php endif; ?>
@@ -37,6 +43,8 @@
                     <legend>(<span>*</span>) Campos obrigatórios</legend>
 
                     <div class="message invalid d-none">Campos obrigátorios não foram preenchidos</div>
+
+                    <div class="message success d-none">Nova empresa cadastrada com sucesso!</div>
 
                     <div class="group">
                         <label for="company-name">Nome *</label>

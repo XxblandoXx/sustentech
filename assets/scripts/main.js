@@ -104,6 +104,18 @@ $(function() {
 
         $.post('conta/cadastrar-empresa', $(this).serialize())
             .done(function(response) {
+                var res = JSON.parse(response);
+
+                if (res.status == 'success') {
+                    $('.message.success').html(res.message).removeClass('d-none');
+
+                    setTimeout(function() {
+                        window.location.reload()
+                    }, 3000);
+                }
+                else {
+                    $('.message.invalid').html(res.message).removeClass('d-none');
+                }
                 console.log(response)
                 //$(this).get(0).reset();
                 //$('#contato form .success').fadeIn();

@@ -1,6 +1,52 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700&display=swap');
-@import url('https://i.icomoon.io/public/temp/f5dbe730f5/sustentech/style.css');
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?lgtclc');
+  src: url('../fonts/icomoon.eot?lgtclc#iefix') format('embedded-opentype'),
+       url('../fonts/icomoon.ttf?lgtclc') format('truetype'),
+       url('../fonts/icomoon.woff?lgtclc') format('woff'),
+       url('../fonts/icomoon.svg?lgtclc#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-building:before {content: "\e910"}
+.icon-user-gear:before {content: "\e90f"}
+.icon-calculator:before {content: "\e90a"}
+.icon-chart-bar:before {content: "\e90b"}
+.icon-chart-line:before {content: "\e90c"}
+.icon-info:before {content: "\e904"}
+.icon-gear:before {content: "\f013"}
+.icon-arrow:before {content: "\e907"}
+.icon-back:before {content: "\e908"}
+.icon-eye:before {content: "\e90d"}
+.icon-eye-off:before {content: "\e90e"}
+.icon-close:before {content: "\e909"}
+.icon-rain:before {content: "\e900"}
+.icon-droplet:before {content: "\e906"}
+.icon-home:before {content: "\e901"}
+.icon-logout:before {content: "\e902"}
+.icon-tools:before {content: "\e903"}
+.icon-profile:before {content: "\e905"}
+
 
 /* reset */
 * {
