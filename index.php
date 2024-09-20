@@ -19,6 +19,5 @@ spl_autoload_register(function ($classname) {
 });
 
 $site = new System();
-
 $site->session_init();
 $site->getPage();

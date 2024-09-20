@@ -6,7 +6,7 @@ class Database {
     private static $host = 'localhost';
     private static $name = 'sustentech';
     private static $user = 'admin';
-    private static $pass = 'root@861035!';
+    private static $pass = 'Root@861035!';
 
     private static $conn = null;
 

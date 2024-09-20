@@ -10,19 +10,15 @@ class Usuario extends Model {
 
     protected $tabela = 'usuario';
 
-    // function __construct() {}
-
-    // function __construct() {
-    //     $site = new System();
-    //     $site->session_init();
-
-    //     if ($site->verify_session()) {
-    //         $this->id = $_SESSION['user']['id'];
-    //         $this->nome = $_SESSION['user']['nome'];
-    //         $this->email = $_SESSION['user']['email'];
-    //     }
-
-    // }
+    function __construct() {
+        $site = new System();
+        
+        if ($site->verify_session()) {
+            $this->id = $_SESSION['user']['id'];
+            $this->nome = $_SESSION['user']['nome'];
+            $this->email = $_SESSION['user']['email'];
+        }
+    }
 
     function getID() {
         return $this->id;

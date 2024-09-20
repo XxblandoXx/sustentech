@@ -140,6 +140,39 @@ class Empresa extends Model {
         }
     }
 
+    function AtualizarEmpresa() {        
+        $sql = "UPDATE $this->tabela SET nome = :nome, segmento = :segmento, custo_manutencao = :custo_manutencao, periodo_manutencao = :periodo_manutencao, tipo_reuso = :tipo_reuso, origem = :origem, tratamento = :tratamento, escoamento = :escoamento WHERE id = :id";
+
+        $response = $this->update($sql, [
+            ':id' => $this->id, 
+            ':nome' => $this->nome,
+            ':segmento' => $this->segmento,
+            ':custo_manutencao' => $this->custo_manutencao,
+            ':periodo_manutencao' => $this->periodo_manutencao,
+            ':tipo_reuso' => $this->tipo_reuso,
+            ':origem' => $this->origem,
+            ':tratamento' => $this->tratamento,
+            ':escoamento' => $this->escoamento,
+        ]);
+
+        if ($response) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Atualização concluída com sucesso',
+                'response' => $response
+            ]);
+        }
+        else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Falha ao tentar atualizar dados da empresa',
+                'response' => $response
+            ]);
+        }
+
+        die;
+    }
+
     function ListarEmpresas() {
         return $this->read("SELECT * FROM $this->tabela WHERE usuario = '$this->usuario'");
     }

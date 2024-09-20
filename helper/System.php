@@ -40,16 +40,9 @@ class System {
 
         if($this->actions != 'index') {
             $action = str_replace('-', '_', $this->actions);
+
             if ($this->controller == 'painel-informativo') {
                 $action = 'single';
-            }
-
-            if(isset($this->explode[2])) {
-                $action = 'details';
-            }
-
-            if($this->controller == 'carrinho') {
-                $action = $this->explode[1];
             }
         } else {
             if(! method_exists($app, $this->actions)) {
@@ -109,10 +102,9 @@ class System {
     }
 
     private function setParams() {
-        $this->params = $this->explode;
-        unset($this->params[0]);
-        unset($this->params[1]);
-        $this->params = array_values($this->params);
+        $request = $_SERVER['REQUEST_URI'];
+        $query = parse_url($request, PHP_URL_QUERY);
+        parse_str($query, $this->params);
     }
 
     # start session

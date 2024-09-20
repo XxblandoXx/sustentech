@@ -10,7 +10,7 @@
 		</button>
 		
 		<?php if ($site->verify_session()): ?>
-		<a href="#" class="cta cta-to-icon">
+		<a href="ferramentas/monitoramento" class="cta cta-to-icon">
 			<i class="icon-chart-bar"></i> monitoramento
 		</a>
 

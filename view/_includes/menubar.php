@@ -34,7 +34,7 @@
 	<div id="logoff" class="modal hide">
 		<div class="modal-content">
 			<div class="modal-head">
-				<button class="close-modal d-block" aria-label="Fechar modal">
+				<button class="close-modal d-block" aria-label="Fechar modal" value="logoff">
 					<i class="icon-close"></i>
 				</button>
 
@@ -45,7 +45,7 @@
 
 			<div class="modal-body mt-60">
 				<form action="conta/logout" method="post" class="d-flex jc-flex-end ai-flex-end gap-24">
-					<button type="button" class="modal-close cta cta-light">Cancelar</button>
+					<button type="button" class="close-modal cta cta-light" value="logoff">Cancelar</button>
 					<button type="submit" class="cta">Sair</button>
 				</form>
 			</div>

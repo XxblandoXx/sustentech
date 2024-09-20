@@ -73,9 +73,9 @@ $(function() {
         $('#simulador .result').html(content);
     });
 
-    $('form.add-new-company [name="company-reuse"]').on('change', function() {
+    $('form.add-new-company [name="company-reuse"], :not(.hide) form.update-company [name="company-reuse"]').on('change', function() {
         $('form.add-new-company .choices').addClass('d-none')
-        $('form.add-new-company .choices[reference="' + $(this).attr('id') + '"]').removeClass('d-none')
+        $('form.add-new-company .choices[reference="' + $(this).val() + '"]').removeClass('d-none')
     });
 
     $('form.add-new-company').on('submit', function(event) {
@@ -88,12 +88,12 @@ $(function() {
         if (! $('[name="company-segment"]').val()) $('[name="company-segment"]').parent().addClass('error');
         if (! $('[name="company-reuse"]').val()) $('[name="company-reuse"]').parent().addClass('error');
 
-        if ($('[name="company-reuse"]').is() == 'Água cinza') {
+        if ($('[name="company-reuse"]').is() == 'agua-cinza') {
             if (! $('[name="company-water-origin"]').val()) $('[name="company-water-origin"]').parent().addClass('error');
             if (! $('[name="company-processing"]').val()) $('[name="company-processing"]').parent().addClass('error');
         }
 
-        if ($('[name="company-reuse"]').val() == 'Reaproveitamento da chuva') {
+        if ($('[name="company-reuse"]').val() == 'reaproveitamento-da-chuva') {
             if (! $('[name="company-escoamento"]').val()) $('[name="company-escoamento"]').parent().addClass('error');
         }
 
@@ -122,6 +122,54 @@ $(function() {
                 //$('#contato form input[type="submit"]').val('Enviar');
                 //$('#contato form input, #contato form select, #contato form textarea, #contato form button').prop('disabled', false);
             });
+    });
+
+    $('form.update-company').on('submit', function(event) {
+        event.preventDefault();
+
+        $('.error').removeClass('error');
+        $('.message.invalid').addClass('d-none');
+
+        if (! $('[name="company-name"]').val()) $('[name="company-name"]').parent().addClass('error');
+        if (! $('[name="company-segment"]').val()) $('[name="company-segment"]').parent().addClass('error');
+        if (! $('[name="company-reuse"]').val()) $('[name="company-reuse"]').parent().addClass('error');
+
+        if ($('[name="company-reuse"]').is() == 'agua-cinza') {
+            if (! $('[name="company-water-origin"]').val()) $('[name="company-water-origin"]').parent().addClass('error');
+            if (! $('[name="company-processing"]').val()) $('[name="company-processing"]').parent().addClass('error');
+        }
+
+        if ($('[name="company-reuse"]').val() == 'reaproveitamento-da-chuva') {
+            if (! $('[name="company-escoamento"]').val()) $('[name="company-escoamento"]').parent().addClass('error');
+        }
+
+        if ($('.error').length) {
+            $('.message.invalid').removeClass('d-none');
+            return;
+        }
+
+        $.post('conta/editar-empresa', $(this).serialize())
+            .done(function(response) {
+                var res = JSON.parse(response);
+
+                if (res.status == 'success') {
+                    $('.message.success').html(res.message).removeClass('d-none');
+
+                    setTimeout(function() {
+                        window.location.reload()
+                    }, 3000);
+                }
+                else {
+                    $('.message.invalid').html(res.message).removeClass('d-none');
+                }
+
+                //$(this).get(0).reset();
+                $('form.update-company [type="submit"]').text('Salvar');
+                $('form.update-company input, form.update-company select, form.update-company button').prop('disabled', false);
+            });
+
+        $('form.update-company [type="submit"]').text('Salvando...');
+        $('form.update-company input, form.update-company select, form.update-company button').prop('disabled', true);
     });
 })
 

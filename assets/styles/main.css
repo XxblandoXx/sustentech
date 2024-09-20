@@ -1367,7 +1367,6 @@ header img {
     font-size: 23px;
     color: #45B583;
     line-height: 31px;
-    margin-bottom: 45px;
     text-transform: uppercase;
 }
 
@@ -1856,4 +1855,24 @@ form .password {
     font-size: 16px;
     line-height: 125%;
     margin-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead tr {
+    background: #45B583;
+}
+
+table thead tr th {
+    color: #FFF;
+    padding: 5px 10px;
+    font-weight: 700;
+}
+
+table tbody tr td {
+    padding: 5px 10px;
+    font-weight: 400;
 }
