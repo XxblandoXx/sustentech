@@ -78,6 +78,22 @@ $(function() {
         $('form.add-new-company .choices[reference="' + $(this).val() + '"]').removeClass('d-none')
     });
 
+    $('[name="new-line-type-file"]').on('change', function() {
+        if (this.checked) {
+            $('.has-file').removeClass('d-none').addClass('d-block');
+            $('.no-file').removeClass('d-block').addClass('d-none');
+        }
+        else {
+            $('.no-file').removeClass('d-none').addClass('d-block');
+            $('.has-file').removeClass('d-block').addClass('d-none');
+        }
+    });
+
+    $('[name="new-line-file"]').on('change', function() {
+        var filename = $(this)[0].files.length ? $(this)[0].files[0].name : 'Escolher Arquivo';
+       $('.has-file label').html('<i class="icon-paperclip"></i> ' + filename); 
+    });
+
     $('form.add-new-company').on('submit', function(event) {
         event.preventDefault();
 
@@ -116,11 +132,6 @@ $(function() {
                 else {
                     $('.message.invalid').html(res.message).removeClass('d-none');
                 }
-                console.log(response)
-                //$(this).get(0).reset();
-                //$('#contato form .success').fadeIn();
-                //$('#contato form input[type="submit"]').val('Enviar');
-                //$('#contato form input, #contato form select, #contato form textarea, #contato form button').prop('disabled', false);
             });
     });
 
@@ -170,6 +181,59 @@ $(function() {
 
         $('form.update-company [type="submit"]').text('Salvando...');
         $('form.update-company input, form.update-company select, form.update-company button').prop('disabled', true);
+    });
+
+    $('form.add-new-consumption').on('submit', function(event) {
+        event.preventDefault();
+
+        $('form.add-new-consumption .error').removeClass('error');
+        $('form.add-new-consumption .message.invalid').addClass('d-none');
+
+        if ($('[name="new-line-type-file"]').prop('checked')) {
+            if (! $('[name="new-line-file"]').val()) $('[name="new-line-file"]').parent().addClass('error');
+        }
+        else {
+            if (! $('[name="new-line-reference"]').val()) $('[name="new-line-reference"]').parent().addClass('error');
+            
+            if (! $('[name="new-line-value"]').val()) $('[name="new-line-value"]').parent().addClass('error');
+        }
+
+        if ($('form.add-new-consumption .error').length) {
+            $('form.add-new-consumption .message.invalid').removeClass('d-none');
+            return;
+        }
+
+        var data = new FormData();
+        data.append('file', $('[name="new-line-file"]').prop('files')[0]);
+        data.append('reference', $('[name="new-line-reference"]').val());
+        data.append('value', $('[name="new-line-value"]').val());
+        data.append('company', $('[name="new-line-company"]').val());
+
+        $.ajax({
+            data: data,
+            type: 'POST',
+            dataType: 'json',
+            cache : false,
+            processData: false,
+            contentType: false,
+            url: 'ferramentas/save-consumption',
+        }).done(function (response) {
+            // var res = JSON.parse(response);
+
+            if (response.status == 'success') {
+                $('form.add-new-consumption .message.success').html(response.message).removeClass('d-none');
+
+                setTimeout(function() {
+                    window.location.reload()
+                }, 3000);
+            }
+            else {
+                $('form.add-new-consumption .message.invalid').html(response.message).removeClass('d-none');
+            }
+        });
+
+        $('form.add-new-consumption [type="submit"]').text('Salvando...');
+        $('form.add-new-consumption input, form.add-new-consumption select, form.add-new-consumption button').prop('disabled', true);
     });
 })
 

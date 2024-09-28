@@ -7,6 +7,8 @@
 	<div class="wrapper">
 		<h2 class="ta-center">Seja bem-vindo(a) ao nosso sistema</h2>
 
+        <hr>
+
 		<form method="post" action="conta/conectar">
 			<div class="group">
                 <label for="username">E-mail*</label>

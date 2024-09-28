@@ -4,6 +4,8 @@
 class PainelAdministrativoController extends Controller {
 
     public function index() {
+        $this->check_permission();
+        
         require(PATH_VIEW . '_includes/header.php');
         require(PATH_VIEW . 'administrativo.php');
         require(PATH_VIEW . '_includes/menubar.php');
@@ -11,6 +13,8 @@ class PainelAdministrativoController extends Controller {
     }
 
     public function conta() {
+        $this->check_permission();
+
         require(PATH_VIEW . '_includes/header.php');
         require(PATH_VIEW . 'perfil.php');
         require(PATH_VIEW . '_includes/menubar.php');
@@ -18,6 +22,8 @@ class PainelAdministrativoController extends Controller {
     }
 
     public function empresas() {
+        $this->check_permission();
+
         require(PATH_VIEW . '_includes/header.php');
 
         $empresa = self::load_model('Empresa');

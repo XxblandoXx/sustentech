@@ -21,4 +21,19 @@ class Controller extends System {
 
     }
 
+    public function check_permission($reverse = false) {
+        if ($reverse) {
+            if ($this->verify_session()) {
+                header('Location: ' . BASE_URL . 'inicio');
+                return;
+            }
+        }
+        else {
+            if (! $this->verify_session()) {
+                header('Location: ' . BASE_URL . 'inicio');
+                return;
+            }
+        }
+    }
+
 }

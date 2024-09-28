@@ -1,5 +1,3 @@
-<?php ?>
-
 <div class="menubar pos-fixed d-flex fw-wrap ai-center jc-center">
 	<a href="inicio" class="menu-item <?php echo $current == 'home' ? 'current' : ''; ?>">
 		<i class="icon-home"></i><span class="d-md-none">Home</span>

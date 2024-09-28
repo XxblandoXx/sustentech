@@ -55,6 +55,10 @@ class System {
 
     }
 
+    public function getController() {
+        return $this->controller;
+    }
+
     public function getDebug() {
         echo 'Url: ' . $this->url;
         echo '<br>';

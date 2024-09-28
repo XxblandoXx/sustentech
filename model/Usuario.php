@@ -10,7 +10,9 @@ class Usuario extends Model {
 
     protected $tabela = 'usuario';
 
-    function __construct() {
+    public function __construct() {
+        parent::__construct();
+
         $site = new System();
         
         if ($site->verify_session()) {
@@ -20,7 +22,7 @@ class Usuario extends Model {
         }
     }
 
-    function getID() {
+    public function getID() {
         return $this->id;
     }
 
@@ -28,7 +30,7 @@ class Usuario extends Model {
         $this->id = $id;
     }
 
-    function getNome() {
+    public function getNome() {
         return $this->nome;
     }
 
@@ -44,7 +46,7 @@ class Usuario extends Model {
         $this->email = $email;
     }
 
-    function getSenha() {
+    public function getSenha() {
         return $this->senha;
     }
 
@@ -52,7 +54,7 @@ class Usuario extends Model {
         $this->senha = md5($senha);
     }
 
-    function CadastrarUsuario() {
+    public function CadastrarUsuario() {
 
         $query = $this->read("SELECT * FROM usuario WHERE email = '$this->email' and senha = '$this->senha'", true);
 

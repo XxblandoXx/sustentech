@@ -1,23 +1,27 @@
 <h1 class="for-sreader">Ferramentas - Sustentech</h1>
 <?php $current = 'ferramentas'; ?>
 
-<div class="wrapper sm-margin">
-	<h2 class="ta-center tt-uppercase">Ferramentas</h2>
+<div class="container">
+	<div class="wrapper sm-margin">
+		<h2 class="ta-center tt-uppercase">Ferramentas</h2>
 
-	<div class="navigation d-flex fw-wrap fd-md-column jc-center">
-		<button type="button" value="simulador" class="open-modal cta cta-to-icon">
-			<i class="icon-calculator"></i> simulador
-		</button>
-		
-		<?php if ($site->verify_session()): ?>
-		<a href="ferramentas/monitoramento" class="cta cta-to-icon">
-			<i class="icon-chart-bar"></i> monitoramento
-		</a>
+		<hr>
 
-		<a href="#" class="cta cta-to-icon">
-			<i class="icon-chart-line"></i> projeções
-		</a>
-		<?php endif; ?>
+		<div class="navigation d-flex fw-wrap fd-md-column jc-center">
+			<button type="button" value="simulador" class="open-modal cta cta-to-icon">
+				<i class="icon-calculator"></i> simulador
+			</button>
+			
+			<?php if ($site->verify_session()): ?>
+			<a href="ferramentas/monitoramento" class="cta cta-to-icon">
+				<i class="icon-chart-bar"></i> monitoramento
+			</a>
+
+			<a href="#" class="cta cta-to-icon">
+				<i class="icon-chart-line"></i> projeções
+			</a>
+			<?php endif; ?>
+		</div>
 	</div>
 </div>
 

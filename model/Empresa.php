@@ -173,7 +173,8 @@ class Empresa extends Model {
         die;
     }
 
-    function ListarEmpresas() {
+    public function getAllCompanies() {
         return $this->read("SELECT * FROM $this->tabela WHERE usuario = '$this->usuario'");
     }
+    
 }

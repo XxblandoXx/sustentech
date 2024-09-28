@@ -1,13 +1,14 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700&display=swap');
+@import url('https://i.icomoon.io/public/temp/c27d020fa6/sustentech/style.css');
 
 @font-face {
   font-family: 'icomoon';
-  src: url('../fonts/icomoon.eot?lgtclc');
-  src: url('../fonts/icomoon.eot?lgtclc#iefix') format('embedded-opentype'),
-       url('../fonts/icomoon.ttf?lgtclc') format('truetype'),
-       url('../fonts/icomoon.woff?lgtclc') format('woff'),
-       url('../fonts/icomoon.svg?lgtclc#icomoon') format('svg');
+  src: url('../fonts/icomoon.eot?fwquom');
+  src: url('../fonts/icomoon.eot?fwquom#iefix') format('embedded-opentype'),
+       url('../fonts/icomoon.ttf?fwquom') format('truetype'),
+       url('../fonts/icomoon.woff?fwquom') format('woff'),
+       url('../fonts/icomoon.svg?fwquom#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -25,7 +26,7 @@
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-building:before {content: "\e910"}
@@ -39,6 +40,9 @@
 .icon-back:before {content: "\e908"}
 .icon-eye:before {content: "\e90d"}
 .icon-eye-off:before {content: "\e90e"}
+.icon-edit:before {content: "\e911"}
+.icon-plus:before {content: "\e913"}
+.icon-trash:before {content: "\e912"}
 .icon-close:before {content: "\e909"}
 .icon-rain:before {content: "\e900"}
 .icon-droplet:before {content: "\e906"}
@@ -231,25 +235,29 @@ hr {
 .container {
     width: 100%;
     margin: 0 auto;
-    max-width: 660px;
+    max-width: 680px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .container-fluid {
     width: 100%;
     margin: 0 auto;
-    max-width: 1920px;
+    max-width: 960px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .d-block {
-    display: block;
+    display: block !important;
 }
 
 .d-flex {
-    display: flex;
+    display: flex !important;
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 .d-inline {
@@ -1466,6 +1474,14 @@ header img {
     text-transform: lowercase;
 }
 
+.cta.update {
+    background: #FF5400;
+}
+
+.cta.delete {
+    background: #C1121F;
+}
+
 @media (max-width: 560px) {
     .cta.cta-to-icon {
         width: 65%;
@@ -1592,6 +1608,25 @@ form .group input:checked + label:before {
     opacity: 1;
 }
 
+form .group.has-file input {
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+}
+
+form .group.has-file label {
+    margin: 0;
+    cursor: pointer;
+    padding: 10px 20px;
+    background: #FFFFFF;
+    border-radius: 15px;
+    max-width: fit-content;
+    border: 2px solid #354F52;
+}
+
 form .group input,
 form .group select {
     width: 100%;
@@ -1610,7 +1645,8 @@ form .group select {
             appearance: none;
 }
 
-form .group input[type="radio"] {
+form .group input[type="radio"],
+form .group input[type="checkbox"] {
     width: 20px;
     height: 20px;
     padding: 0;
@@ -1621,6 +1657,48 @@ form .group input::placeholder {
     color: #ADB5BD;
     font-size: 16px;
     line-height: 20px;
+}
+
+form .group input[type="checkbox"].switch {
+    width: 45px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 25px;
+    background: #DEDEDE;
+    border-color: #CCCCCC;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+form .group input[type="checkbox"].switch:after {
+    content: '';
+    top: 50%;
+    left: 10%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #FFFFFF;
+    transition: left 0.3s ease;
+    transform: translateY(-50%);
+}
+
+form .group input[type="checkbox"].switch:checked {
+    background: #45B583;
+    border-color: #000000;
+}
+
+form .group input[type="checkbox"].switch:checked::after {
+    left: 67%;
+}
+
+form .group.error input,
+form .group.error select {
+    border-color: #c1121f;
+}
+
+form .group.error input::placeholder {
+    color: #c1121f;
 }
 
 form .group p {
@@ -1636,17 +1714,8 @@ form .group p a {
     border-bottom: 1px solid #354F52;
 }
 
-form .message {
-    color: #c1121f;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 1.2;
-    text-align: center;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-}
-
-form .message {
+.message {
+    color: #f4a261;
     font-weight: 700;
     font-size: 14px;
     text-align: left;
@@ -1659,11 +1728,11 @@ form .message {
     border-left: 5px solid;
 }
 
-form .message.invalid {
+.message.invalid {
     color: #c1121f;
 }
 
-form .message.success {
+.message.success {
     color: #00a35a;
 }
 
@@ -1674,6 +1743,35 @@ form .password {
     font-size: 26px;
     width: 40px;
     height: 40px;
+}
+
+form .has-placeholder.start input {
+    padding-left: 55px;
+}
+
+form .has-placeholder.final input {
+    padding-right: 55px;
+}
+
+form .placeholder {
+    bottom: 4px;
+    width: 48px;
+    height: 40px;
+    font-size: 18px;
+    background: #fff;
+    position: absolute;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form .placeholder.start {
+    left: 12px;
+}
+
+form .placeholder.final {
+    right: 12px;
 }
 
 .menubar {
@@ -1710,6 +1808,7 @@ form .password {
     margin: 0 auto 10px;
     align-items: center;
     justify-content: center;
+    transition: 0.3s ease;
 }
 
 .menubar .menu-item:hover i,
@@ -1859,7 +1958,9 @@ form .password {
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    border-collapse: separate;
 }
 
 table thead tr {
@@ -1872,6 +1973,9 @@ table thead tr th {
     font-weight: 700;
 }
 
+table tbody tr {
+    background: #F8F9FA;
+}
 table tbody tr td {
     padding: 5px 10px;
     font-weight: 400;

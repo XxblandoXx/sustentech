@@ -1,7 +1,7 @@
 
         </main>
 
-        <!-- <div class="leaves left pos-absolute d-block d-md-none desktop">
+        <div class="leaves left pos-absolute d-block d-md-none desktop">
             <img src="<?php echo IMAGES; ?>leaves.png" alt="" width="264" height="590">
         </div>
 
@@ -11,7 +11,7 @@
 
         <div class="leaves pos-absolute mb d-none d-md-flex ai-center jc-center mobile bottom">
             <img src="<?php echo IMAGES; ?>folhagem.png" alt="" width="1026" height="502">
-        </div> -->
+        </div>
 
         <?php if ($hasFooter): ?>
         <footer class="d-flex ai-center jc-center">
