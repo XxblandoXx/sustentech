@@ -1,7 +1,7 @@
 <?php
 
 
-require_once PATH_VIEW . 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -76,7 +76,7 @@ class Consumo extends Model {
     }
 
     public function getAllConsumption($company) {
-        return $this->read("SELECT * FROM $this->tabela WHERE empresa = '$company' AND is_deleted = 0");
+        return $this->read("SELECT * FROM $this->tabela WHERE empresa = '$company' AND is_deleted = 0 ORDER BY referencia");
     }
 
     public function CreateConsumption() {
@@ -153,6 +153,56 @@ class Consumo extends Model {
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Falha ao tentar processar cadastro',
+                'response' => $response
+            ]);
+        }
+
+        die;
+    }
+
+    public function UpdateConsumption() {
+        $sql = "UPDATE $this->tabela SET referencia = :referencia, valor = :valor, updated = CURRENT_TIMESTAMP() WHERE id = :id";
+
+        $response = $this->update($sql, [
+            ':id' => $this->id,
+            ':referencia' => $this->referencia,
+            ':valor' => $this->valor
+        ]);
+
+        if ($response) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Consumo atualizado com sucesso',
+                'response' => $response
+            ]);
+        }
+        else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Falha ao tentar atualizar dados de consumo',
+                'response' => $response
+            ]);
+        }
+
+        die;
+    }
+
+    public function DeleteConsumption() {
+        $response = $this->update("UPDATE $this->tabela SET is_deleted = 1 WHERE id = :id", [
+            ':id' => $this->id
+        ]);
+
+        if ($response) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Consumo removido com sucesso',
+                'response' => $response
+            ]);
+        }
+        else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Falha ao tentar apagar dados de consumo',
                 'response' => $response
             ]);
         }

@@ -40,8 +40,8 @@
             <?php endif; ?>
 
             <div class="group d-flex jc-flex-end ai-center">
-                <a href="painel-administrativo" class="cta cta-light">Voltar</a>                
-                <button class="cta" type="submit">Salvar</button>
+                <a href="painel-administrativo" class="cta cta-light cta-small">Voltar</a>                
+                <button class="cta cta-small" type="submit">Salvar</button>
             </div>
         </form>
     </div>

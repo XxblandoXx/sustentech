@@ -1475,10 +1475,12 @@ header img {
 }
 
 .cta.update {
+    padding: 10px 15px;
     background: #FF5400;
 }
 
 .cta.delete {
+    padding: 10px 15px;
     background: #C1121F;
 }
 

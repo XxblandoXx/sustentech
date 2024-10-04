@@ -34,5 +34,21 @@ class FerramentasController extends Controller {
         $consumo->setEmpresa( filter_input(INPUT_POST, 'company') );
         $consumo->CreateConsumption();
     }
+
+    public function delete_consumption()
+    {
+        $consumo = self::load_model('Consumo');
+        $consumo->setID( filter_input(INPUT_POST, 'delete-consumption-id') );
+        $consumo->DeleteConsumption();
+    }
+
+    public function update_consumption()
+    {
+        $consumo = self::load_model('Consumo');
+        $consumo->setID( filter_input(INPUT_POST, 'edit-consumption-id') );
+        $consumo->setReferencia( filter_input(INPUT_POST, 'edit-line-reference') );
+        $consumo->setValor( filter_input(INPUT_POST, 'edit-line-value') );
+        $consumo->UpdateConsumption();
+    }
     
 }

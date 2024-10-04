@@ -88,6 +88,7 @@ class ContaController extends Controller {
 
     public function redefinir() {
         $modelo = self::load_model('Usuario');
+        $modelo->VerifyEmailRegister( filter_input(INPUT_POST, 'usermail') );
     }
 
     public function logout() {

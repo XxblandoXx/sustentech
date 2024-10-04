@@ -3,6 +3,7 @@
 
 const BASE_URL = 'http://localhost/sustentech/';
 
+const PATH_BASE = '/';
 const PATH_VIEW = 'view/';
 const PATH_MODEL = 'model/';
 const PATH_HELPER = 'helper/';

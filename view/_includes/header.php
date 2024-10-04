@@ -18,6 +18,8 @@
     <title>Sustentech</title>
 </head>
 <body>
+
+    <?php if ($site->getController() != 'Index' and $site->getController() != 'conta'): ?>
     <header class="d-flex ai-center jc-center">
         <img src="<?php echo IMAGES; ?>logo-sustentech.png" alt="Logo Sustentech" width="292" height="85">
     </header>
@@ -25,5 +27,6 @@
     <div class="leaves pos-absolute mb d-none d-md-flex ai-center jc-center mobile top">
         <img src="<?php echo IMAGES; ?>folhagem.png" alt="" width="1026" height="502">
     </div>
+    <?php endif ?>
 
     <main data-page="<?php echo $site->getController(); ?>">

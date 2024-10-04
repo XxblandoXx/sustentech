@@ -19,6 +19,7 @@
         </footer>
         <?php endif; ?>
 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="<?php echo SCRIPT; ?>library.js"></script>
         <script src="<?php echo SCRIPT; ?>main.js"></script>
     </body>

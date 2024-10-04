@@ -1,17 +1,12 @@
 <?php 
 
 	$current = 'perfil';
-
-    $url = $_SERVER['REQUEST_URI'];
-    $query = parse_url($url, PHP_URL_QUERY);
-    parse_str($query, $params);
-
     $companies = $empresa->getAllCompanies();
 
 ?>
 <h1 class="for-sreader">Painel Administrativo - Sustentech</h1>
 
-<div class="container">
+<div class="container-fluid">
     <div class="wrapper sm-margin">
     	<h2 class="ta-center">Gerenciar Empresas</h2>
 
@@ -19,11 +14,37 @@
 
         <?php if ($companies): ?>
         <div class="navigation d-flex fw-wrap fd-md-column ai-md-center jc-center">
-            <?php foreach ($companies as $key => $company): ?>
-            <button class="cta cta-to-icon open-modal" value="edit-company-<?php echo $key; ?>">
-                <i class="icon-gear"></i> <?php echo $company['nome']; ?>
-            </button>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Razão social</th>
+                        <th>Última Atualização</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($companies as $key => $comp): ?>
+                    <tr>
+                        <td class="ta-center"><i class="icon-gear"></i></td>
+                        <td><?php echo $comp['nome']; ?></td>
+                        <td><?php echo date_format(date_create($comp['updated']), 'd/m/Y H:s') ?></td>
+                        <td>
+                            <div class="d-flex jc-center gap-12">
+                                <button class="cta update open-modal" value="update-company-<?php echo $key; ?>" aria-label="Editar empresa">
+                                    <i class="icon-edit"></i>
+                                </button>
+                                <button class="cta delete open-modal" value="delete-company-<?php echo $key; ?>" aria-label="Remover empresa">
+                                    <i class="icon-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
 
+            <?php foreach ($companies as $key => $company): ?>
             <div id="edit-company-<?php echo $key; ?>" class="modal hide">
                 <div class="modal-content">
                     <div class="modal-head">
@@ -119,7 +140,6 @@
                     </div>
                 </div>
             </div>
-
             <?php endforeach ?>
         </div>
         <?php else: ?>
@@ -220,8 +240,8 @@
         </div>
 
         <div class="d-flex fw-wrap jc-space-between gap-16 mt-45">
-            <a href="painel-administrativo" class="cta cta-light">Voltar</a>                
-            <button class="cta open-modal" type="button" value="add-company">Adicionar empresa</button>
+            <a href="painel-administrativo" class="cta cta-light cta-small">Voltar</a>                
+            <button class="cta cta-small open-modal" type="button" value="add-company">Adicionar empresa</button>
         </div>
     </div>
 </div>

@@ -122,6 +122,48 @@ class Usuario extends Model {
 
     }
 
+    public function VerifyEmailRegister($email) {
+        $query = $this->read("SELECT * FROM $this->tabela WHERE email = '$email'", true);
+
+        if ($query) {
+            $password = $this->password_generate(8);
+
+            $body = '
+                <table border="0" style="width: 700px; background: #45B583;">
+                    <tr>
+                        <td colspan="2" style="padding: 20px 10px; text-align: center; color: #ffffff; font-weight: bold">
+                            REDEFINIR SENHA - SUSTENTECH
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding: 20px;">
+                            <table border="0" style="width: 660px; background: #ffffff;">
+                                <tr>
+                                    <td colspan="2" style="padding: 20px;">
+                                        <div style="margin: 5px 0px; text-align: center">Nova senha: <strong>'.$password.'</strong></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            ';
+
+            $this->setSenha($password);
+
+            $this->update("UPDATE $this->tabela SET senha = :senha WHERE id = :id", [
+                ':id' => $query['id'], 
+                ':senha' => $this->getSenha()
+            ]);
+
+            $this->send_mail($email, 'Redefinição de Senha', $body);
+            header('Location: ' . BASE_URL . 'conta/redefinir-senha?success=1');
+        }
+        else {
+            header('Location: ' . BASE_URL . 'conta/redefinir-senha?error=1');
+        }
+    }
+
     public function Conectar() {
 
         $query = $this->read("SELECT * FROM $this->tabela WHERE email = '$this->email' AND senha = '$this->senha'", true);
