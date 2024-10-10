@@ -91,10 +91,10 @@ class Usuario extends Model {
     function AtualizarUsuario() {
 
         if (! empty($this->senha)) {
-            $sql = "UPDATE $this->tabela SET nome = :nome, email = :email, senha = :senha WHERE id = :id";
+            $sql = "UPDATE $this->tabela SET nome = :nome, email = :email, senha = :senha, updated = CURRENT_TIMESTAMP() WHERE id = :id";
         }
         else {
-            $sql = "UPDATE $this->tabela SET nome = :nome, email = :email WHERE id = :id";
+            $sql = "UPDATE $this->tabela SET nome = :nome, email = :email, updated = CURRENT_TIMESTAMP() WHERE id = :id";
         }
 
         $response = $this->update($sql, [

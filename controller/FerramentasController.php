@@ -3,14 +3,16 @@
 
 class FerramentasController extends Controller {
 
-    public function index() {
+    public function index()
+    {
         require(PATH_VIEW . '_includes/header.php');
         require(PATH_VIEW . 'ferramentas.php');
         require(PATH_VIEW . '_includes/menubar.php');
         require(PATH_VIEW . '_includes/footer.php');
     }
 
-    public function monitoramento() {
+    public function monitoramento()
+    {
         $this->check_permission();
 
         require(PATH_VIEW . '_includes/header.php');
@@ -25,13 +27,17 @@ class FerramentasController extends Controller {
         require(PATH_VIEW . '_includes/footer.php');
     }
 
-    public function save_consumption() {
+    public function save_consumption()
+    {
         $consumo = self::load_model('Consumo');
 
-        $consumo->setFile( $_FILES['file'] );
-        $consumo->setValor( filter_input(INPUT_POST, 'value') );
-        $consumo->setReferencia( filter_input(INPUT_POST, 'reference') );
-        $consumo->setEmpresa( filter_input(INPUT_POST, 'company') );
+        $consumo->setFile($_FILES['new-line-file']);
+        $consumo->setEmpresa(filter_input(INPUT_POST, 'new-line-company'));
+        $consumo->setValor(filter_input(INPUT_POST, 'new-line-value'));
+        $consumo->setCusto(filter_input(INPUT_POST, 'new-line-cost'));
+        $consumo->setReuso(filter_input(INPUT_POST, 'new-line-reuse'));
+        $consumo->setReferencia(filter_input(INPUT_POST, 'new-line-reference'));
+
         $consumo->CreateConsumption();
     }
 
@@ -45,9 +51,11 @@ class FerramentasController extends Controller {
     public function update_consumption()
     {
         $consumo = self::load_model('Consumo');
-        $consumo->setID( filter_input(INPUT_POST, 'edit-consumption-id') );
-        $consumo->setReferencia( filter_input(INPUT_POST, 'edit-line-reference') );
-        $consumo->setValor( filter_input(INPUT_POST, 'edit-line-value') );
+        $consumo->setID(filter_input(INPUT_POST, 'edit-consumption-id'));
+        $consumo->setCusto(filter_input(INPUT_POST, 'edit-line-cost'));
+        $consumo->setValor(filter_input(INPUT_POST, 'edit-line-value'));
+        $consumo->setReuso(filter_input(INPUT_POST, 'edit-line-reuse'));
+        $consumo->setReferencia(filter_input(INPUT_POST, 'edit-line-reference'));
         $consumo->UpdateConsumption();
     }
     

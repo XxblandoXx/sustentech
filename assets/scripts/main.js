@@ -22,7 +22,7 @@ function ClickEvents() {
     });
 
     // Abrir modal para atualizar consumo
-    $('.cta.update').on('click', function (event) {
+    $('.monitoramento .table-view .cta.update').on('click', function (event) {
         event.preventDefault(); //desabilita a ação do botão
         var id = $(this).data('id');
         var reference = $(this).val(); // armazena o valor do botão para referenciar o modal que será aberto
@@ -30,12 +30,14 @@ function ClickEvents() {
         $('[name="edit-consumption-id"]').val(id);
         $('[name="edit-line-reference"]').val($(`#cons-id-${id} .reference`).data('original'));
         $('[name="edit-line-value"]').val($(`#cons-id-${id} .value`).data('original'));
+        $('[name="edit-line-reuse"]').val($(`#cons-id-${id} .reuse`).data('original'));
+        $('[name="edit-line-cost"]').val($(`#cons-id-${id} .cost`).data('original'));
 
         $(`.modal#${reference}`).fadeIn().removeClass('hide'); // Transição para abrir modal
     });
 
     // Abrir modal para apagar consumo
-    $('.cta.delete').on('click', function (event) {
+    $('.monitoramento .table-view .cta.delete').on('click', function (event) {
         event.preventDefault(); //desabilita a ação do botão
         var id = $(this).data('id');
         var reference = $(this).val(); // armazena o valor do botão para referenciar o modal que será aberto
@@ -56,6 +58,9 @@ function ClickEvents() {
         $('.change-view').removeClass('d-none');
         $(this).addClass('d-none');
         $('.'+$(this).val()).removeClass('d-none');
+
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
     });
 
     // Função para exibir - ocultar senha
@@ -218,6 +223,33 @@ function SubmitEvent() {
         $('form.update-company input, form.update-company select, form.update-company button').prop('disabled', true);
     });
 
+    $('form.delete-company').on('submit', function(event) {
+        event.preventDefault();
+
+        $('form.delete-company .message.invalid').addClass('d-none');
+
+        $.post('conta/deletar-empresa', $(this).serialize())
+            .done(function(response) {
+                var res = JSON.parse(response);
+
+                if (res.status == 'success') {
+                    $('form.delete-company .message.success').html(res.message).removeClass('d-none');
+
+                    setTimeout(function() {
+                        window.location.reload()
+                    }, 3000);
+                }
+                else {
+                    $('form.delete-company .message.invalid').html(res.message).removeClass('d-none');
+                }
+
+                $('form.delete-company button').prop('disabled', false);
+            });
+
+        $('form.delete-company button').prop('disabled', false);
+    });
+
+    // Adicionar consumo
     $('form.add-new-consumption').on('submit', function(event) {
         event.preventDefault();
 
@@ -229,8 +261,9 @@ function SubmitEvent() {
         }
         else {
             if (! $('[name="new-line-reference"]').val()) $('[name="new-line-reference"]').parent().addClass('error');
-            
             if (! $('[name="new-line-value"]').val()) $('[name="new-line-value"]').parent().addClass('error');
+            if (! $('[name="new-line-cost"]').val()) $('[name="new-line-cost"]').parent().addClass('error');
+            if (! $('[name="new-line-reuse"]').val()) $('[name="new-line-reuse"]').parent().addClass('error');
         }
 
         if ($('form.add-new-consumption .error').length) {
@@ -239,10 +272,12 @@ function SubmitEvent() {
         }
 
         var data = new FormData();
-        data.append('file', $('[name="new-line-file"]').prop('files')[0]);
-        data.append('reference', $('[name="new-line-reference"]').val());
-        data.append('value', $('[name="new-line-value"]').val());
-        data.append('company', $('[name="new-line-company"]').val());
+        data.append('new-line-company', $('[name="new-line-company"]').val());
+        data.append('new-line-file', $('[name="new-line-file"]').prop('files')[0]);
+        data.append('new-line-reference', $('[name="new-line-reference"]').val());
+        data.append('new-line-value', $('[name="new-line-value"]').val());
+        data.append('new-line-cost', $('[name="new-line-cost"]').val());
+        data.append('new-line-reuse', $('[name="new-line-reuse"]').val());
 
         $.ajax({
             data: data,
@@ -253,24 +288,33 @@ function SubmitEvent() {
             contentType: false,
             url: 'ferramentas/save-consumption',
         }).done(function (response) {
-            // var res = JSON.parse(response);
-
             if (response.status == 'success') {
                 $('form.add-new-consumption .message.success').html(response.message).removeClass('d-none');
 
                 setTimeout(function() {
                     window.location.reload()
-                }, 3000);
+                }, 2500);
+            }
+            else if (response.status == 'warning') {
+                $('form.add-new-consumption .message.warning').html(response.message).removeClass('d-none');
+
+                setTimeout(function() {
+                    window.location.reload()
+                }, 2500);
             }
             else {
                 $('form.add-new-consumption .message.invalid').html(response.message).removeClass('d-none');
             }
+
+            $('form.add-new-consumption [type="submit"]').text('Salvar');
+            $('form.add-new-consumption input, form.add-new-consumption select, form.add-new-consumption button').prop('disabled', false);
         });
 
         $('form.add-new-consumption [type="submit"]').text('Salvando...');
         $('form.add-new-consumption input, form.add-new-consumption select, form.add-new-consumption button').prop('disabled', true);
     });
 
+    // Atualizar dados do consumo
     $('form.update-cons').on('submit', function(event) {
         event.preventDefault();
 
@@ -280,6 +324,8 @@ function SubmitEvent() {
 
         if (! $('[name="edit-line-reference"]').val()) $('[name="edit-line-reference"]').parent().addClass('error');
         if (! $('[name="edit-line-value"]').val()) $('[name="edit-line-value"]').parent().addClass('error');
+        if (! $('[name="edit-line-cost"]').val()) $('[name="edit-line-cost"]').parent().addClass('error');
+        if (! $('[name="edit-line-reuse"]').val()) $('[name="edit-line-reuse"]').parent().addClass('error');
 
 
         if ($('form.update-cons .error').length) {
@@ -296,14 +342,21 @@ function SubmitEvent() {
 
                     setTimeout(function() {
                         window.location.reload()
-                    }, 1800);
+                    }, 2500);
                 }
                 else {
                     $('form.update-cons .message.invalid').html(res.message).removeClass('d-none');
                 }
+
+                $('form.update-cons input, form.update-cons select, form.update-cons button').prop('disabled', false);
+                $('form.update-cons button').html('Salvar');
             });
+
+        $('form.update-cons input, form.update-cons select, form.update-cons button').prop('disabled', true);
+        $('form.update-cons button').html('Salvando...');
     });
 
+    // Apagar dados do consumo
     $('.delete-cons').on('submit', function(event) {
         event.preventDefault();
 
@@ -316,12 +369,18 @@ function SubmitEvent() {
 
                     setTimeout(function() {
                         window.location.reload()
-                    }, 3000);
+                    }, 2500);
                 }
                 else {
                     $('.delete-cons .message.invalid').html(res.message).removeClass('d-none');
                 }
+
+                $('.delete-cons input, .delete-cons button').prop('disabled', false);
+                $('.delete-cons button').html('Apagar');
             });
+
+        $('.delete-cons input, .delete-cons button').prop('disabled', true);
+        $('.delete-cons button').html('Apagando...');
     });
 }
 
@@ -333,29 +392,39 @@ function SiteBoot() {
     }
 
     $('[mask-money]').mask("#.##0,00", {reverse: true});
-
-    google.charts.load('current', {'packages': ['bar']});
-    google.charts.setOnLoadCallback(drawChart);
 }
 
 function drawChart () {
     var data = new google.visualization.arrayToDataTable(dataDrawChart);
+
+    // Formatação de moeda
+    var formatter = new google.visualization.NumberFormat({
+        prefix: 'R$ ', 
+        negativePrefix: 'R$ -', 
+        fractionDigits: 2
+    });
+    formatter.format(data, 4); // Formata a coluna 'Valor Pago'
     
     var options = {
-        chart: {
-            title: 'Gráfico de monitoramento',
-            subtitle: ''
+        title: 'Gráfico de monitoramento',
+        vAxes: {
+            0: {title: 'Consumo / Quantidade Reutilizada'},  // Eixo para Consumo e Água Reutilizada
+            1: {title: 'Valor Pago', format: 'currency'} // Eixo para Valor Pago
         },
-        width: 650,
+        series: {
+            0: {type: 'bars', targetAxisIndex: 0}, // Consumo
+            1: {type: 'bars', targetAxisIndex: 0}, // Água Reutilizada
+            2: {type: 'bars', targetAxisIndex: 1}  // Valor Pago
+        },
+        legend: { position: 'bottom' },
+        width: 800,
         height: 450,
         bars: 'vertical',
-        legend: { position: 'none' },
-        colors: ['#45B583'],
-        // bar: { groupWidth: '80%' }
+        colors: ['#45B583', '#354F52', '#F4A261'],
     }
 
-    var chart = new google.charts.Bar(document.querySelector('.chart-consumption'));
-    chart.draw(data, google.charts.Bar.convertOptions(options));
+    var chart = new google.visualization.ComboChart(document.querySelector('.chart-consumption'));
+    chart.draw(data, options);
 }
 
 $(function() {

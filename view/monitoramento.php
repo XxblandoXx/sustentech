@@ -11,7 +11,7 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 ?>
 
 <?php if (isset($params['company'])): ?>
-	<div class="container-fluid">
+	<div class="monitoramento container-fluid">
 		<div class="wrapper sm-margin">
 			<h2 class="ta-center">Área de Monitoramento</h2><hr>
 			<?php $consumption = $consumo->getAllConsumption($params['company']); ?>
@@ -26,7 +26,7 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 					</button>
 
 					<button class="cta cta-dark cta-small mb-20 change-view d-none" value="table-view">
-						Visualizar tabela <i class="icon-chart-bar"></i>
+						Visualizar tabela <i class="icon-table"></i>
 					</button>
 					<?php endif; ?>
 				</div>
@@ -39,6 +39,8 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 								<tr>
 									<th>Data de Referência</th>
 									<th>Consumo</th>
+									<th>Reuso</th>
+									<th>Valor pago</th>
 									<th>Última Atualização</th>
 									<th class="ta-center">---</th>
 								</tr>
@@ -48,19 +50,31 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 								<tr id="cons-id-<?php echo $cons['id']; ?>">
 									<td>
 										<div class="reference" data-original="<?php echo $cons['referencia']; ?>">
-											<?php echo date_format(date_create($cons['referencia']), 'd/m/Y'); ?>
+											<?php echo date('d/m/Y', strtotime($cons['referencia'])); ?>
 										</div>
 									</td>
 
 									<td>
 										<div class="value" data-original="<?php echo $cons['valor']; ?>">
-											<?php echo $cons['valor']; ?>m³
+											<?php echo $cons['valor']; ?> m³
+										</div>
+									</td>
+
+									<td>
+										<div class="reuse" data-original="<?php echo $cons['reuso']; ?>">
+											<?php echo $cons['reuso']; ?> m³
+										</div>
+									</td>
+
+									<td>
+										<div class="cost" data-original="<?php echo $cons['custo']; ?>">
+											R$ <?php echo $cons['custo']; ?>
 										</div>
 									</td>
 
 									<td>
 										<div class="updated" data-original="<?php echo $cons['updated']; ?>">
-											<?php echo date_format(date_create($cons['updated']), 'd/m/Y H:s'); ?>
+											<?php echo date('d/m/Y H:s', strtotime($cons['updated'])); ?>
 										</div>
 									</td>
 
@@ -77,12 +91,20 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 
 						<script>
 							var dataDrawChart = [
-								['Data de referência', 'Consumo'],
+								['Mês', 'Consumo', 'Reuso', { role: 'annotation' }, 'Custo'],
 								<?php foreach ($consumption as $cons): ?>
-								['<?php echo date_format(date_create($cons['referencia']), 'd/m/Y'); ?>', <?php echo $cons['valor']; ?>],
+								[
+									'<?php echo date('F', strtotime($cons['referencia'])); ?>', 
+									parseFloat("<?php echo $cons['valor']; ?>"),
+									parseFloat("<?php echo $cons['reuso']; ?>"),
+									null,
+									parseFloat("<?php echo $cons['custo']; ?>".replace(',', '.'))
+								],
 								<?php endforeach; ?>
 							];
 						</script>
+
+						<a href="ferramentas" class="cta cta-light cta-small mt-45"><i class="icon-back"></i> Voltar</a>
 
 						<div id="update-consumption" class="modal hide">
 			                <div class="modal-content">
@@ -101,7 +123,8 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 			                            <legend>(<span>*</span>) Campos obrigatórios</legend>
 
 			                            <div class="message invalid d-none">Campos obrigátorios não foram preenchidos</div>
-			                            <div class="message success d-none">Dados de empresa atualizados com sucesso!</div>
+			                            <div class="message warning d-none"></div>
+			                            <div class="message success d-none"></div>
 
 			                            <input type="hidden" name="edit-consumption-id" value="">
 
@@ -110,14 +133,29 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 				                            <input type="date" id="edit-line-reference" name="edit-line-reference">
 				                        </div>
 
-				                        <div class="group pos-relative">
-				                            <label for="edit-line-value">Valor do consumo *</label>
-				                            <input type="text" id="edit-line-value" name="edit-line-value">
-				                            <div class="placeholder final">m³</div>
+				                        <div class="group columns2">
+				                        	<div class="group pos-relative has-placeholder final">
+				                        		<label for="edit-line-value">Consumo *</label>
+				                        		<input type="text" id="edit-line-value" name="edit-line-value">
+				                        		<div class="placeholder final">m³</div>
+				                        	</div>
+
+				                        	<div class="group pos-relative has-placeholder final">
+				                        		<label for="edit-line-reuse">Quantidade reutilizada *</label>
+				                        		<input type="text" id="edit-line-reuse" name="edit-line-reuse">
+				                        		<div class="placeholder final">m³</div>
+				                        	</div>
 				                        </div>
 
+				                        <div class="group pos-relative has-placeholder start">
+			                        		<label for="edit-line-cost">Valor pago *</label>
+			                        		<div class="placeholder start">R$</div>
+			                        		<input type="tel" id="edit-line-cost" name="edit-line-cost" mask-money>
+			                        	</div>
+
 			                            <div class="message invalid d-none">Campos obrigátorios não foram preenchidos</div>
-			                            <div class="message success d-none">Dados de empresa atualizados com sucesso!</div>
+			                            <div class="message warning d-none"></div>
+			                            <div class="message success d-none"></div>
 
 			                            <div class="d-flex fw-wrap jc-flex-end gap-16 mt-45">
 			                                <button type="button" class="close-modal cta cta-light cta-small" value="update-consumption">Cancelar</button>
@@ -135,7 +173,7 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 			                            <i class="icon-close"></i>
 			                        </button>
 
-			                        <h2 class="tt-uppercase ta-center">Atualizar consumo</h2>
+			                        <h2 class="tt-uppercase ta-center">Deletar consumo</h2>
 			                    </div>
 
 			                    <hr>
@@ -145,13 +183,15 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 			                        	<div class="message invalid d-none"></div>
 			                            <div class="message success d-none"></div>
 
-			                        	<p>
+			                        	<p class="ta-center">
+			                            	Tem certeza que deseja apagar esse dado de consumo?
+			                        		<br>
+			                        		<br>
 			                        		<strong>Data:</strong> <span class="reference"></span>
 			                        		<br>
-			                        		<strong>Valor:</strong> <span class="value"></span>
+			                        		<strong>Consumo:</strong> <span class="value"></span>
 			                        	</p>
-			                        	<br>
-			                            <p>Tem certeza que deseja apagar esse dado de consumo?</p>
+			                        	
 
 			                            <input type="hidden" name="delete-consumption-id" value="">
 
@@ -189,7 +229,8 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 								<legend>(<span>*</span>) Campos obrigatórios</legend>
 
 		                        <div class="message invalid d-none">Campos obrigátorios não foram preenchidos</div>
-		                        <div class="message success d-none">Dados de empresa atualizados com sucesso!</div>
+		                        <div class="message warning d-none"></div>
+		                        <div class="message success d-none"></div>
 
 		                        <input type="hidden" name="new-line-company" value="<?php echo $params['company']; ?>">
 
@@ -200,7 +241,10 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 		                        	</label>
 		                        </div>
 
+
 	                        	<div class="has-file group pos-relative d-none mt-45 mb-20">
+		                        	<p>Não sabe como preencher a planilha? <a href="<?php echo UPLOADS; ?>modelo.xlsx" download target="_blank" rel="noopener">Clique aqui</a> e baixe o modelo.</p>
+
 	                        		<label for="new-line-file"><i class="icon-paperclip"></i> Escolher Arquivo</label>
 	                        		<input type="file" name="new-line-file" id="new-line-file">
 	                        	</div>
@@ -211,16 +255,30 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 			                            <input type="date" id="new-line-reference" name="new-line-reference">
 			                        </div>
 
-			                        <div class="group pos-relative">
-			                            <label for="new-line-value">Valor do consumo *</label>
-			                            <input type="text" id="new-line-value" name="new-line-value">
-			                            <div class="placeholder final">m³</div>
+			                        <div class="group columns2">
+			                        	<div class="group pos-relative has-placeholder final">
+			                        		<label for="new-line-value">Consumo *</label>
+			                        		<input type="text" id="new-line-value" name="new-line-value">
+			                        		<div class="placeholder final">m³</div>
+			                        	</div>
+
+			                        	<div class="group pos-relative has-placeholder final">
+			                        		<label for="new-line-reuse">Quantidade reutilizada *</label>
+			                        		<input type="text" id="new-line-reuse" name="new-line-reuse">
+			                        		<div class="placeholder final">m³</div>
+			                        	</div>
 			                        </div>
+
+			                        <div class="group pos-relative has-placeholder start">
+		                        		<label for="new-line-cost">Valor pago *</label>
+		                        		<div class="placeholder start">R$</div>
+		                        		<input type="tel" id="new-line-cost" name="new-line-cost" mask-money>
+		                        	</div>
 		                        </div>
 								
 								<div class="d-flex jc-flex-end ai-flex-end gap-24 mt-45">
-									<button type="button" class="close-modal cta cta-light" value="add-new-line">Cancelar</button>
-									<button type="submit" class="cta">Salvar</button>
+									<button type="button" class="close-modal cta cta-light cta-small" value="add-new-line">Cancelar</button>
+									<button type="submit" class="cta cta-small">Salvar</button>
 								</div>
 							</form>
 

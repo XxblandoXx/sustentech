@@ -86,6 +86,14 @@ class ContaController extends Controller {
         $modelo->AtualizarEmpresa();
     }
 
+    public function deletar_empresa() {
+        $modelo = self::load_model('Empresa');
+
+        $modelo->setID( filter_input(INPUT_POST, 'delete-company-id') );
+        
+        $modelo->DeletarEmpresa();
+    }
+
     public function redefinir() {
         $modelo = self::load_model('Usuario');
         $modelo->VerifyEmailRegister( filter_input(INPUT_POST, 'usermail') );

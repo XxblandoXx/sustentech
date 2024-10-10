@@ -10,7 +10,9 @@ class Consumo extends Model {
 
     private $id;
     private $valor;
+    private $custo;
     private $referencia;
+    private $reuso;
     private $empresa;
     private $created;
     private $updated;
@@ -35,12 +37,28 @@ class Consumo extends Model {
         $this->valor = $valor;
     }
 
+    public function getCusto() {
+        return $this->custo;
+    }
+
+    public function setCusto($custo) {
+        $this->custo = $custo;
+    }
+
     public function getReferencia() {
         return $this->referencia;
     }
 
     public function setReferencia($referencia) {
         $this->referencia = $referencia;
+    }
+
+    public function getReuso() {
+        return $this->reuso;
+    }
+
+    public function setReuso($reuso) {
+        $this->reuso = $reuso;
     }
 
     public function getEmpresa() {
@@ -104,45 +122,78 @@ class Consumo extends Model {
                     $value = trim(strip_tags($cell->getValue()));
 
                     if ($j == 'A') {
-                        $this->valor = $value;
-                    }
-
-                    if ($j == 'B') {
                         $value = (int)$value;
                         $timestamp = ($value - 25569) * 86400;
                         $this->referencia = date('Y-m-d', $timestamp);
                     }
+
+                    if ($j == 'B') {
+                        $this->valor = $value;
+                    }
+
+                    if ($j == 'C') {
+                        $this->reuso = $value;
+                    }
+
+                    if ($j == 'D') {
+                        $this->custo = number_format($value, 2, ',', '.');
+                    }
                 }
 
-                $query = $this->read("SELECT * FROM $this->tabela WHERE valor = '$this->valor' AND referencia = '$this->referencia' AND empresa = '$this->company'");
+
+                $query = $this->read("SELECT * FROM consumo WHERE MONTH(referencia) = MONTH('$this->referencia')");
 
                 if (! $query) {
-                    $sql = "INSERT INTO $this->tabela(valor, referencia, empresa) VALUE (:valor, :referencia, :empresa)";
+                    $sql = "INSERT INTO $this->tabela(valor, custo, referencia, reuso, empresa) VALUE (:valor, :custo, :referencia, :reuso, :empresa)";
 
                     $response[] = $this->create($sql, [
                         ':valor' => $this->valor,
+                        ':custo' => $this->custo,
                         ':referencia' => $this->referencia,
+                        ':reuso' => $this->reuso,
                         ':empresa' => $this->empresa
                     ]);
                 }
                 else {
-                    $response[] = 1;
+                    $response[] = 2;
                 }
             }
 
         }
         else {
-            $sql = "INSERT INTO $this->tabela(valor, referencia, empresa) VALUE (:valor, :referencia, :empresa)";
+            $query = $this->read("SELECT * FROM consumo WHERE MONTH(referencia) = MONTH('$this->referencia')");
+            if (! $query) {
+                $sql = "INSERT INTO $this->tabela(valor, custo, referencia, reuso, empresa) VALUE (:valor, :custo, :referencia, :reuso, :empresa)";
 
-            $response[] = $this->create($sql, [
-                ':valor' => $this->valor,
-                ':referencia' => $this->referencia,
-                ':empresa' => $this->empresa
-            ]);
+                $response[] = $this->create($sql, [
+                    ':valor' => $this->valor,
+                    ':custo' => $this->custo,
+                    ':referencia' => $this->referencia,
+                    ':reuso' => $this->reuso,
+                    ':empresa' => $this->empresa
+                ]);
+            }
+            else {
+                $response[] = 3;
+            }
         }
 
 
-        if (! in_array(0, $response)) {
+        if (in_array(2, $response)) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Cadastro concluído mas os meses duplicados foram ignorados',
+                'response' => $response
+            ]);
+        }
+        else if (in_array(3, $response)) {
+            echo json_encode([
+                'status' => 'warning',
+                'message' => 'Tentativa de cadastro de mês já existente bloqueado, atualize o consumo do mês referente',
+                'response' => $response
+            ]);
+        }
+        else if (! in_array(0, $response)) {
             echo json_encode([
                 'status' => 'success',
                 'message' => 'Ação concluída com sucesso',
@@ -161,12 +212,14 @@ class Consumo extends Model {
     }
 
     public function UpdateConsumption() {
-        $sql = "UPDATE $this->tabela SET referencia = :referencia, valor = :valor, updated = CURRENT_TIMESTAMP() WHERE id = :id";
+        $sql = "UPDATE $this->tabela SET valor = :valor, custo = :custo, referencia = :referencia, reuso = :reuso, updated = CURRENT_TIMESTAMP() WHERE id = :id";
 
         $response = $this->update($sql, [
             ':id' => $this->id,
+            ':valor' => $this->valor,
+            ':custo' => $this->custo,
             ':referencia' => $this->referencia,
-            ':valor' => $this->valor
+            ':reuso' => $this->reuso,
         ]);
 
         if ($response) {
@@ -188,7 +241,7 @@ class Consumo extends Model {
     }
 
     public function DeleteConsumption() {
-        $response = $this->update("UPDATE $this->tabela SET is_deleted = 1 WHERE id = :id", [
+        $response = $this->update("UPDATE $this->tabela SET updated = CURRENT_TIMESTAMP(), is_deleted = 1 WHERE id = :id", [
             ':id' => $this->id
         ]);
 

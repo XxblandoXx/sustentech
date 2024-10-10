@@ -141,7 +141,7 @@ class Empresa extends Model {
     }
 
     function AtualizarEmpresa() {        
-        $sql = "UPDATE $this->tabela SET nome = :nome, segmento = :segmento, custo_manutencao = :custo_manutencao, periodo_manutencao = :periodo_manutencao, tipo_reuso = :tipo_reuso, origem = :origem, tratamento = :tratamento, escoamento = :escoamento WHERE id = :id";
+        $sql = "UPDATE $this->tabela SET nome = :nome, segmento = :segmento, custo_manutencao = :custo_manutencao, periodo_manutencao = :periodo_manutencao, tipo_reuso = :tipo_reuso, origem = :origem, tratamento = :tratamento, escoamento = :escoamento, updated = CURRENT_TIMESTAMP() WHERE id = :id";
 
         $response = $this->update($sql, [
             ':id' => $this->id, 
@@ -173,8 +173,31 @@ class Empresa extends Model {
         die;
     }
 
+    public function DeletarEmpresa() {
+        $response = $this->update("UPDATE $this->tabela SET updated = CURRENT_TIMESTAMP(), is_deleted = 1 WHERE id = :id", [
+            ':id' => $this->id
+        ]);
+
+        if ($response) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Empresa removida com sucesso',
+                'response' => $response
+            ]);
+        }
+        else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Falha ao tentar apagar dados da empresa',
+                'response' => $response
+            ]);
+        }
+
+        die;
+    }
+
     public function getAllCompanies() {
-        return $this->read("SELECT * FROM $this->tabela WHERE usuario = '$this->usuario'");
+        return $this->read("SELECT * FROM $this->tabela WHERE usuario = '$this->usuario' AND is_deleted = 0");
     }
     
 }

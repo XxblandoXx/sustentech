@@ -3,30 +3,34 @@
 @import url('https://i.icomoon.io/public/temp/c27d020fa6/sustentech/style.css');
 
 @font-face {
-  font-family: 'icomoon';
-  src: url('../fonts/icomoon.eot?fwquom');
-  src: url('../fonts/icomoon.eot?fwquom#iefix') format('embedded-opentype'),
-       url('../fonts/icomoon.ttf?fwquom') format('truetype'),
-       url('../fonts/icomoon.woff?fwquom') format('woff'),
-       url('../fonts/icomoon.svg?fwquom#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?bqxrp3');
+    src: url('../fonts/icomoon.eot?bqxrp3#iefix') format('embedded-opentype'),
+         url('../fonts/icomoon.ttf?bqxrp3') format('truetype'),
+         url('../fonts/icomoon.woff?bqxrp3') format('woff'),
+         url('../fonts/icomoon.svg?bqxrp3#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+[class^="icon-"],
+[class*=" icon-"] {
+    speak: never;
+    line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+
+    /* use !important to prevent issues with 
+    browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    
+    /* Better Font Rendering ========= */
+    -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-building:before {content: "\e910"}
@@ -36,10 +40,12 @@
 .icon-chart-line:before {content: "\e90c"}
 .icon-info:before {content: "\e904"}
 .icon-gear:before {content: "\f013"}
+.icon-table:before {content: "\f0ce"}
 .icon-arrow:before {content: "\e907"}
 .icon-back:before {content: "\e908"}
 .icon-eye:before {content: "\e90d"}
 .icon-eye-off:before {content: "\e90e"}
+.icon-paperclip:before {content: "\e914"}
 .icon-edit:before {content: "\e911"}
 .icon-plus:before {content: "\e913"}
 .icon-trash:before {content: "\e912"}
@@ -127,6 +133,15 @@ hr {
     margin-top: 20px;
     margin-bottom: 30px;
     border-bottom: 1px solid #E8E8E8;
+}
+
+p {
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    margin-bottom: 15px;
+    font-family: 'Exo', sans-serif;
 }
 
 /* estrutura */
@@ -1551,7 +1566,7 @@ form .group.columns2 label {
     width: 100%;
 }
 
-form .group.columns2 div {
+form .group.columns2 > div {
     width: 50%;
     max-width: calc(50% - 8px);
 }
@@ -1717,7 +1732,7 @@ form .group p a {
 }
 
 .message {
-    color: #f4a261;
+    color: #F4A261;
     font-weight: 700;
     font-size: 14px;
     text-align: left;
@@ -1731,11 +1746,11 @@ form .group p a {
 }
 
 .message.invalid {
-    color: #c1121f;
+    color: #C1121F;
 }
 
 .message.success {
-    color: #00a35a;
+    color: #00A35A;
 }
 
 form .password {
@@ -1769,11 +1784,11 @@ form .placeholder {
 }
 
 form .placeholder.start {
-    left: 12px;
+    left: 10px;
 }
 
 form .placeholder.final {
-    right: 12px;
+    right: 10px;
 }
 
 .menubar {

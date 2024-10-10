@@ -6,7 +6,7 @@
 ?>
 <h1 class="for-sreader">Painel Administrativo - Sustentech</h1>
 
-<div class="container-fluid">
+<div class="container">
     <div class="wrapper sm-margin">
     	<h2 class="ta-center">Gerenciar Empresas</h2>
 
@@ -45,10 +45,10 @@
             </table>
 
             <?php foreach ($companies as $key => $company): ?>
-            <div id="edit-company-<?php echo $key; ?>" class="modal hide">
+            <div id="update-company-<?php echo $key; ?>" class="modal hide">
                 <div class="modal-content">
                     <div class="modal-head">
-                        <button class="close-modal d-block" aria-label="Fechar modal" value="edit-company-<?php echo $key; ?>">
+                        <button class="close-modal d-block" aria-label="Fechar modal" value="update-company-<?php echo $key; ?>">
                             <i class="icon-close"></i>
                         </button>
 
@@ -133,8 +133,38 @@
                             <div class="message success d-none">Dados de empresa atualizados com sucesso!</div>
 
                             <div class="d-flex fw-wrap jc-flex-end gap-16 mt-45">
-                                <button type="button" class="close-modal cta cta-light" value="edit-company-<?php echo $key; ?>">Cancelar</button>
+                                <button type="button" class="close-modal cta cta-light" value="update-company-<?php echo $key; ?>">Cancelar</button>
                                 <button type="submit" class="cta">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="delete-company-<?php echo $key; ?>" class="modal hide">
+                <div class="modal-content">
+                    <div class="modal-head">
+                        <button class="close-modal d-block" aria-label="Fechar modal" value="delete-company-<?php echo $key; ?>">
+                            <i class="icon-close"></i>
+                        </button>
+
+                        <h2 class="tt-uppercase ta-center">Apagar empresa <?php echo $company['nome']; ?></h2>
+                    </div>
+
+                    <hr>
+
+                    <div class="modal-body mt-60">
+                        <form action="#" method="post" class="delete-company">
+                            <div class="message invalid d-none"></div>
+                            <div class="message success d-none"></div>
+
+                            <p class="ta-center">Tem certeza que deseja apagar essa empresa?</p>
+
+                            <input type="hidden" name="delete-company-id" value="<?php echo $company['id']; ?>">
+
+                            <div class="d-flex fw-wrap jc-flex-end gap-16 mt-45">
+                                <button type="button" class="close-modal cta cta-light cta-small" value="delete-company-<?php echo $key; ?>">Cancelar</button>
+                                <button type="submit" class="cta cta-small">Apagar</button>
                             </div>
                         </form>
                     </div>
