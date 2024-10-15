@@ -1,7 +1,7 @@
 <?php
 
 
-class PainelAdministrativoController extends Controller {
+class painelAdministrativoController extends Controller {
 
     public function index() {
         $this->check_permission();

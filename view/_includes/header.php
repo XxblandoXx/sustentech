@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <?php if ($site->getController() != 'Index' and $site->getController() != 'conta'): ?>
+    <?php if ($site->getController() != 'index' and $site->getController() != 'conta'): ?>
     <header class="d-flex ai-center jc-center">
         <img src="<?php echo IMAGES; ?>logo-sustentech.png" alt="Logo Sustentech" width="292" height="85">
     </header>

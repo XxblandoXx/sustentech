@@ -34,7 +34,7 @@
 
 			<div class="d-flex ai-center jc-flex-end gap-24">
 				<a href="inicio" class="cta-simple">acessar sem conta</a>
-				<button type="submit" class="cta">Conectar</button>
+				<button type="submit" class="cta cta-small">Conectar</button>
 			</div>
 		</form>
 	</div>

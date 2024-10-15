@@ -168,6 +168,8 @@ class Usuario extends Model {
 
         $query = $this->read("SELECT * FROM $this->tabela WHERE email = '$this->email' AND senha = '$this->senha'", true);
 
+        var_dump($query);
+
         if ($query) {
             $site = new System();
             $site->session_init();

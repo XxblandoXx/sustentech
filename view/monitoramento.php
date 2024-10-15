@@ -89,12 +89,17 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 							</tbody>
 						</table>
 
+						<?php
+						date_default_timezone_set('America/Sao_Paulo');
+						$formatter = new IntlDateFormatter('pt_BR', null, null, 'America/Sao_Paulo', IntlDateFormatter::GREGORIAN, 'MMMM');
+						?>
+
 						<script>
 							var dataDrawChart = [
 								['Mês', 'Consumo', 'Reuso', { role: 'annotation' }, 'Custo'],
 								<?php foreach ($consumption as $cons): ?>
 								[
-									'<?php echo date('F', strtotime($cons['referencia'])); ?>', 
+									'<?php echo ucfirst($formatter->format(new DateTime($cons['referencia']))); ?>', 
 									parseFloat("<?php echo $cons['valor']; ?>"),
 									parseFloat("<?php echo $cons['reuso']; ?>"),
 									null,
@@ -207,6 +212,8 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 
 					<div class="chart-view d-none">
 						<div class="chart-consumption d-flex ai-center jc-center"></div>
+
+						<small>Quantidade total reutilizada: <strong><?php echo $consumo->TotalReuseCompany($params['company'])['total']; ?> m³</strong></small>
 					</div>
 				<?php else: ?>
 					<h3 class="message">Você ainda não tem nenhum dado de consumo cadastrado.</h3>

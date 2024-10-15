@@ -1,7 +1,7 @@
 <?php
 
 
-const BASE_URL = 'http://localhost/sustentech/';
+const BASE_URL = '/';
 
 const PATH_BASE = '/';
 const PATH_VIEW = 'view/';

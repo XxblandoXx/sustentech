@@ -59,7 +59,10 @@ function ClickEvents() {
         $(this).addClass('d-none');
         $('.'+$(this).val()).removeClass('d-none');
 
-        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.load('current', {
+            'packages': ['corechart', 'controls'],
+            'language': 'pt-BR'
+        });
         google.charts.setOnLoadCallback(drawChart);
     });
 
@@ -108,6 +111,11 @@ function SubmitEvent() {
     $('#simulador form').on('submit', function(event) {
         event.preventDefault();
 
+        if (! $('[name="consumo"]').val()) {
+            $('[name="consumo"]').parent().addClass('error');
+            return;
+        }
+
         var content = '';
         var periods = [
             {
@@ -119,7 +127,7 @@ function SubmitEvent() {
                 "label": "3 meses"
             }
         ];
-        var consumo = $('[name="consumo"]').val();
+        var consumo = parseFloat($('[name="consumo"]').val().replace(',', '.'));
 
         periods.forEach(function(month) {
             content += `
@@ -273,7 +281,7 @@ function SubmitEvent() {
 
         var data = new FormData();
         data.append('new-line-company', $('[name="new-line-company"]').val());
-        data.append('new-line-file', $('[name="new-line-file"]').prop('files')[0]);
+        if ($('[name="new-line-file"]').prop('files')[0]) data.append('new-line-file', $('[name="new-line-file"]').prop('files')[0]);
         data.append('new-line-reference', $('[name="new-line-reference"]').val());
         data.append('new-line-value', $('[name="new-line-value"]').val());
         data.append('new-line-cost', $('[name="new-line-cost"]').val());

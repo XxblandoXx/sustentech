@@ -1,7 +1,7 @@
 <?php
 
 
-class PainelInformativoController extends Controller {
+class painelInformativoController extends Controller {
 
     public function index() {
         require(PATH_VIEW . '_includes/header.php');

@@ -102,9 +102,8 @@ class Consumo extends Model {
         $response = [];
 
         if ($this->file) {
-            $identify = \PhpOffice\PhpSpreadsheet\IOFactory::identify($this->file['tmp_name']);
-            $reader   = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($identify);
-
+            $identify = IOFactory::identify($this->file['tmp_name']);
+            $reader   = IOFactory::createReader($identify);
             $reader->setReadDataOnly(false);
 
             $spreadsheet = $reader->load($this->file['tmp_name']);
@@ -141,7 +140,7 @@ class Consumo extends Model {
                 }
 
 
-                $query = $this->read("SELECT * FROM consumo WHERE MONTH(referencia) = MONTH('$this->referencia')");
+                $query = $this->read("SELECT * FROM $this->tabela WHERE MONTH(referencia) = MONTH('$this->referencia') AND empresa = $this->empresa");
 
                 if (! $query) {
                     $sql = "INSERT INTO $this->tabela(valor, custo, referencia, reuso, empresa) VALUE (:valor, :custo, :referencia, :reuso, :empresa)";
@@ -161,7 +160,7 @@ class Consumo extends Model {
 
         }
         else {
-            $query = $this->read("SELECT * FROM consumo WHERE MONTH(referencia) = MONTH('$this->referencia')");
+            $query = $this->read("SELECT * FROM $this->tabela WHERE MONTH(referencia) = MONTH('$this->referencia') AND empresa = $this->empresa");
             if (! $query) {
                 $sql = "INSERT INTO $this->tabela(valor, custo, referencia, reuso, empresa) VALUE (:valor, :custo, :referencia, :reuso, :empresa)";
 
@@ -208,7 +207,7 @@ class Consumo extends Model {
             ]);
         }
 
-        die;
+        die();
     }
 
     public function UpdateConsumption() {
@@ -261,5 +260,9 @@ class Consumo extends Model {
         }
 
         die;
+    }
+
+    public function TotalReuseCompany($company) {
+        return $this->read("SELECT SUM(reuso) AS total FROM $this->tabela WHERE empresa = $company", true);
     }
 }

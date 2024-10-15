@@ -1,6 +1,3 @@
-DROP DATABASE sustentech;
-CREATE DATABASE sustentech;
-USE sustentech;
 
 CREATE TABLE `usuario`(
 	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE KEY,

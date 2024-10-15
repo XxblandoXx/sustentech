@@ -1,7 +1,7 @@
 <?php
 
 
-class InicioController extends Controller {
+class inicioController extends Controller {
 
     public function index() {
         require(PATH_VIEW . '_includes/header.php');

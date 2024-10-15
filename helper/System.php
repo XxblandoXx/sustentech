@@ -9,7 +9,7 @@ class System {
 
     private $url;
     private $explode;
-    private $pageDafault = 'Index';
+    private $pageDafault = 'index';
     private $actionDafault = 'index';
 
 
@@ -25,9 +25,13 @@ class System {
         return $this->params;
     }
 
-    public function getPage() {
+    public function getPage()
+    {
 
-        $inst_controller = str_replace('-','',$this->controller.'Controller');
+        $cont = explode('-', $this->controller);
+        if (count($cont) == 2) $inst_controller = $cont[0].ucfirst($cont[1]).'Controller';
+        else $inst_controller = $this->controller.'Controller';
+
         $path_controller = PATH_CONTROLLER . $inst_controller.'.php';
 
         if(! file_exists($path_controller)) {
@@ -44,7 +48,8 @@ class System {
             if ($this->controller == 'painel-informativo') {
                 $action = 'single';
             }
-        } else {
+        } 
+        else {
             if(! method_exists($app, $this->actions)) {
                 die('Ocorreu um erro. A action não existe ' . $this->actions);
             }

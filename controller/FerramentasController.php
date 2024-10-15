@@ -1,7 +1,7 @@
 <?php
 
 
-class FerramentasController extends Controller {
+class ferramentasController extends Controller {
 
     public function index()
     {
@@ -31,7 +31,7 @@ class FerramentasController extends Controller {
     {
         $consumo = self::load_model('Consumo');
 
-        $consumo->setFile($_FILES['new-line-file']);
+        if (isset($_FILES['new-line-file'])) $consumo->setFile($_FILES['new-line-file'] ?: '');
         $consumo->setEmpresa(filter_input(INPUT_POST, 'new-line-company'));
         $consumo->setValor(filter_input(INPUT_POST, 'new-line-value'));
         $consumo->setCusto(filter_input(INPUT_POST, 'new-line-cost'));

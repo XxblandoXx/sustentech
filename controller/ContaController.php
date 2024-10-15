@@ -1,7 +1,7 @@
 <?php 
 
 
-class ContaController extends Controller {
+class contaController extends Controller {
 
     public function index() {
         $modelo = self::load_model('Usuario');
@@ -23,7 +23,7 @@ class ContaController extends Controller {
     }
 
     public function conectar() {
-        $modelo = self::load_model('Usuario');
+        $modelo = $this->load_model('Usuario');
 
         $modelo->setEmail(filter_input(INPUT_POST, 'username'));
         $modelo->setSenha(filter_input(INPUT_POST, 'password'));

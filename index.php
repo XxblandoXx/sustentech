@@ -3,7 +3,14 @@
 
 require_once('config.php');
 
+
 spl_autoload_register(function ($classname) {
+
+    if (str_contains($classname, 'PhpOffice') or str_contains($classname, 'PHPMailer')) {
+        require_once __DIR__ . '/vendor/autoload.php';
+        return;
+    }
+    
     $path = [PATH_CONTROLLER, PATH_HELPER, PATH_MODEL];
     $is_class = null;
 
@@ -15,7 +22,7 @@ spl_autoload_register(function ($classname) {
     }
 
     if (!$is_class)
-        die("Classe {$classname} não encontrada!");
+        die("Classe $classname não encontrada!");
 });
 
 $site = new System();

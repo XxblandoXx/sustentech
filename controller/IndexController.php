@@ -1,7 +1,7 @@
 <?php
 
 
-class IndexController extends Controller {
+class indexController extends Controller {
 
     public function index() {
         $this->check_permission(true);

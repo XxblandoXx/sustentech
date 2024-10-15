@@ -3,10 +3,10 @@
 
 class Database {
 
-    private static $host = 'localhost';
-    private static $name = 'sustentech';
-    private static $user = 'admin';
-    private static $pass = 'Root@861035!';
+    private static $host = 'sql210.infinityfree.com';
+    private static $name = 'if0_37488313_sustentech';
+    private static $user = 'if0_37488313';
+    private static $pass = 'ePg58Z53BJ';
 
     private static $conn = null;
 

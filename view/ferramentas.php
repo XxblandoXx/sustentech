@@ -38,7 +38,7 @@
 		<hr>
 
 		<div class="modal-body mt-60">
-			<form action="#" method="post" class="d-flex jc-space-between ai-center gap-12">
+			<form action="#" method="post" class="d-flex fw-md-wrap jc-md-flex-end jc-space-between ai-center gap-12">
 				<div class="group col-auto">
 					<label for="consumo">Consumo m³</label>
 					<input type="text" name="consumo" id="consumo">
