@@ -166,9 +166,7 @@ class Usuario extends Model {
 
     public function Conectar() {
 
-        $query = $this->read("SELECT * FROM $this->tabela WHERE email = '$this->email' AND senha = '$this->senha'", true);
-
-        var_dump($query);
+        $query = $this->read("SELECT * FROM $this->tabela WHERE email = '$this->email' AND senha = '$this->senha' AND is_deleted = 0", true);
 
         if ($query) {
             $site = new System();

@@ -40,7 +40,7 @@
 
             <div class="d-flex fw-wrap gap-16 jc-center">
                 <?php foreach ($content['tratamentos'] as $trt): ?>
-                    <a href="<?php echo $trt['url']; ?>" class="cta cta-dark ta-center"><?php echo $trt['label']; ?></a>
+                    <a href="<?php echo $trt['url']; ?>" class="cta cta-dark d-flex ai-center jc-center ta-center"><?php echo $trt['label']; ?></a>
                 <?php endforeach; ?>
             </div>
         </div>

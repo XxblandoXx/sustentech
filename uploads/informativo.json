@@ -19,19 +19,15 @@
         "tratamentos": [
             {
                 "url": "#",
-                "label": "Instalações<br>de reuso"
+                "label": "Tratamento <br>Químico"
             },
             {
                 "url": "#",
-                "label": "Tratamento<br>Biológico"
+                "label": "Tratamento <br>Biológico"
             },
             {
                 "url": "#",
-                "label": "Tratamento<br>Químico"
-            },
-            {
-                "url": "#",
-                "label": "Tratamento<br>fisico-químico"
+                "label": "Tratamento <br>fisico-químico"
             }
         ]
     },
@@ -41,33 +37,29 @@
         "accordion": [
             {
                 "label": "O que é?",
-                "text": "São águas proveniente de atividades mais simples que podem possuir resíduos de alimentos, produtos de limpeza e concentração baixa de produtos tóxicos."
+                "text": "A coleta e o uso de água da chuva reduz a dependência de fontes de água potável e promove a sustentabilidade,  garantindo um melhor gerenciamento dos recursos hídricos com menos desperdício, preservando assim o meio ambiente."
             },
             {
                 "label": "Como captar?",
-                "text": ""
+                "text": "A captação pode ser realizada através de telhados, calhas, condutores (tubos de queda), tanques de armazenamento e dentre outros."
             },
             {
                 "label": "Onde utilizar?",
-                "text": ""
+                "text": "Pode ser utilizada na agricultura, serviços de limpeza, descarga em vasos sanitários, lavagens que não necessitam de uma qualidade de água tão alta,  torres de resfriamento dentre outras utilizações."
             }
         ],
         "tratamentos": [
             {
                 "url": "#",
-                "label": "Instalações<br>de reuso"
+                "label": "Calhas"
             },
             {
                 "url": "#",
-                "label": "Tratamento<br>Biológico"
+                "label": "Jardins <br>de Chuva"
             },
             {
                 "url": "#",
-                "label": "Tratamento<br>Químico"
-            },
-            {
-                "url": "#",
-                "label": "Tratamento<br>fisico-químico"
+                "label": "Pavimentos <br>Permeáveis"
             }
         ]
     }

@@ -29,4 +29,4 @@
     </div>
     <?php endif ?>
 
-    <main data-page="<?php echo $site->getController(); ?>">
+    <main data-page="<?php echo $site->getController(); ?>" data-subpage="<?php echo $site->actions; ?>">

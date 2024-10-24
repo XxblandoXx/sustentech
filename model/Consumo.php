@@ -263,6 +263,42 @@ class Consumo extends Model {
     }
 
     public function TotalReuseCompany($company) {
-        return $this->read("SELECT SUM(reuso) AS total FROM $this->tabela WHERE empresa = $company", true);
+        $response = $this->read("SELECT SUM(reuso) AS total FROM $this->tabela WHERE empresa = $company and is_deleted = 0", true);
+        return $response['total'];
+    }
+
+    public function getProjections($company) {
+        $valor_litro = 0;
+        $valor_reuso = 0;
+        $valor_consumo = 0;
+
+        $query = $this->read(
+           "SELECT valor AS consumo, custo, reuso
+              FROM $this->tabela
+             WHERE empresa = $company and is_deleted = 0"
+        );
+
+        foreach ($query as $res) {
+            $valor_litro += (float)$res['consumo'] / (float)$res['custo'];
+            $valor_reuso += $res['reuso'];
+            $valor_consumo += $res['consumo'];
+        }
+
+        $media_litro = round($valor_litro) / count($query);
+        $media_reuso = $valor_reuso / count($query);
+        $media_consumo = $valor_consumo / count($query);
+
+        $periods = [3, 6, 12];
+
+        foreach ($periods as $period) {
+            $chart[] = [
+                $period . ' meses', 
+                $media_reuso * $period, 
+                $media_consumo * $period, 
+                round(($media_litro * $media_consumo) * $period)
+            ];
+        }
+
+        return json_encode($chart);
     }
 }

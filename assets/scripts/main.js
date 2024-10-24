@@ -63,7 +63,7 @@ function ClickEvents() {
             'packages': ['corechart', 'controls'],
             'language': 'pt-BR'
         });
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChartMonitoramento);
     });
 
     // Função para exibir - ocultar senha
@@ -81,6 +81,12 @@ function ClickEvents() {
             $(input).attr('type', 'password')
             $(this).find('i').attr('class', 'icon-eye');
         }
+    });
+
+    $('.filters-projections button').on('click', function() {
+        $('.filters-projections button').removeClass('cta-dark');
+        $(this).addClass('cta-dark');
+        filterPeriod(parseInt($(this).val()))
     });
 }
 
@@ -400,9 +406,16 @@ function SiteBoot() {
     }
 
     $('[mask-money]').mask("#.##0,00", {reverse: true});
+
+    setTimeout(function() {
+        if ($('[data-subpage="projecoes"]').length) {
+            google.charts.load('current', {packages: ['corechart', 'controls']});
+            google.charts.setOnLoadCallback(drawChartProjecoes);
+        }
+    }, 500)
 }
 
-function drawChart () {
+function drawChartMonitoramento () {
     var data = new google.visualization.arrayToDataTable(dataDrawChart);
 
     // Formatação de moeda
@@ -433,6 +446,43 @@ function drawChart () {
 
     var chart = new google.visualization.ComboChart(document.querySelector('.chart-consumption'));
     chart.draw(data, options);
+}
+
+
+var dataChartProjection, chartProjection, optionChartProjection;
+function drawChartProjecoes () {
+    dataChartProjection = new google.visualization.arrayToDataTable(dataDrawChart);
+
+    var formatMeters = new google.visualization.NumberFormat({suffix: ' m³'});
+    var formatCurrency = new google.visualization.NumberFormat({prefix: 'R$ '});
+
+    formatMeters.format(dataChartProjection, 1);
+    formatMeters.format(dataChartProjection, 2);
+    formatCurrency.format(dataChartProjection, 3);
+
+    optionChartProjection = {
+        title: 'Gráfico de Projeções',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        hAxis: { title: 'Período' },
+        vAxis: { title: 'Valores' },
+        gridlines: { count: 4 },
+        series: {
+            0: { color: '#45B583'},
+            1: { color: '#354F52'},
+            2: { color: '#F4A261'}
+        }
+    };
+
+    chartProjection = new google.visualization.LineChart(document.querySelector('.chart-projections'));
+    filterPeriod(2);
+}
+
+function filterPeriod(period) {
+    var view = new google.visualization.DataView(dataChartProjection);
+    view.setRows(0, period);
+
+    chartProjection.draw(view, optionChartProjection);
 }
 
 $(function() {
