@@ -278,24 +278,46 @@ class Consumo extends Model {
              WHERE empresa = $company and is_deleted = 0"
         );
 
+
+        $query_empresa = $this->read(
+           "SELECT custo_manutencao, periodo_manutencao
+              FROM empresa
+             WHERE id = $company and is_deleted = 0",
+        true);
+
+        $total = count($query);
+
         foreach ($query as $res) {
-            $valor_litro += (float)$res['consumo'] / (float)$res['custo'];
+            $valor_litro += (float)$res['reuso'] / (float)$res['custo'];
             $valor_reuso += $res['reuso'];
             $valor_consumo += $res['consumo'];
         }
 
-        $media_litro = round($valor_litro) / count($query);
-        $media_reuso = $valor_reuso / count($query);
-        $media_consumo = $valor_consumo / count($query);
+        $media_litro = round($valor_litro) / $total;
+        $media_reuso = $valor_reuso / $total;
+        $media_consumo = $valor_consumo / $total;
 
         $periods = [3, 6, 12];
 
+        $chart[] = ["0", 0, 0, 0, 0];
+
         foreach ($periods as $period) {
+            if ($query_empresa['periodo_manutencao'] == 'Mensal') {
+                $manutencao = (float)$query_empresa['custo_manutencao'] * $period;
+            }
+            elseif ($query_empresa['periodo_manutencao'] == 'Semestral') {
+                $manutencao = (float)$query_empresa['custo_manutencao'] * floor($period / 6);
+            }
+            else {
+                $manutencao = (float)$query_empresa['custo_manutencao'] * floor($period / 12);
+            }
+
             $chart[] = [
                 $period . ' meses', 
                 $media_reuso * $period, 
-                $media_consumo * $period, 
-                round(($media_litro * $media_consumo) * $period)
+                $media_consumo * $period,
+                $manutencao,
+                round(($media_litro * $media_consumo) * $period) - $manutencao
             ];
         }
 

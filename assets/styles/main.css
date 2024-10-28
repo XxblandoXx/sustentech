@@ -143,6 +143,10 @@ p {
     font-family: 'Exo', sans-serif;
 }
 
+main {
+    min-height: calc(100vh - 100px);
+}
+
 /* estrutura */
 .gap-12 {
     gap: 12px;
@@ -186,11 +190,19 @@ p {
 }
 
 .mt-60 {
-    margin-top: 45px;
+    margin-top: 60px;
 }
 
 .mb-60 {
-    margin-bottom: 45px;
+    margin-bottom: 60px;
+}
+
+.ml-15 {
+    margin-left: 15px;
+}
+
+.mr-15 {
+    margin-right: 15px;
 }
 
 .for-display {
@@ -1396,6 +1408,10 @@ header img {
     gap: 20px 40px;
 }
 
+[data-subpage="empresas"] .wrapper .navigation {
+    overflow: auto;
+}
+
 .leaves.desktop {
     width: 180px;
     pointer-events: none;
@@ -1927,8 +1943,16 @@ form .placeholder.final {
     z-index: 100;
     overflow: auto;
     position: fixed;
-    padding: 50px 20px 130px;
+    padding: 120px 20px;
     background: rgba(0, 0, 0, 60%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal::-webkit-scrollbar {
+    width: 0;
 }
 
 .modal.hide {
@@ -1938,8 +1962,8 @@ form .placeholder.final {
 .modal .modal-content {
     width: 100%;
     margin: auto;
-    padding: 20px 30px;
-    max-width: 560px;
+    padding: 20px;
+    max-width: 640px;
     position: relative;
     background: #FFFFFF;
     border-radius: 15px;
@@ -1973,6 +1997,27 @@ form .placeholder.final {
     margin-bottom: 5px;
 }
 
+figure {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+figure figcaption {
+    font-size: 12px;
+    font-style: italic;
+}
+
+figure img {
+    margin: 0 auto 5px;
+    border-radius: 10px;
+}
+
+.table-view {
+    overflow: auto;
+}
+
 table {
     width: 100%;
     overflow: hidden;
@@ -1988,6 +2033,7 @@ table thead tr th {
     color: #FFF;
     padding: 5px 10px;
     font-weight: 700;
+    min-width: 160px;
 }
 
 table tbody tr {
@@ -1998,13 +2044,77 @@ table tbody tr td {
     font-weight: 400;
 }
 
+.chart-consumption {
+    overflow: auto;
+}
+
+.chart-projections {
+    width: 850px;
+    height: 450px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
 @media (max-width: 767px) {
     header {
         z-index: 3;
+    }
+
+    main {
+        min-height: calc(100vh - 60px);
     }
 
     .wrapper {
         z-index: 3;
         margin-bottom: 180px;
     }
+
+    .menubar {
+        gap: 12px;
+    }
+
+    .menubar .menu-item i {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    form .group.columns2 > div {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.list-companies .navigation a {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #E5E5E5;
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+}
+
+.list-companies .navigation a:hover {
+    background: #E5E5E5;
+}
+
+.navigation .notify {
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #E5E5E5;
+}
+
+.navigation .notify h3 {
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.navigation .notify p {
+    margin-bottom: 5px;
+}
+
+.navigation .notify :last-child {
+    margin-bottom: 0;
 }

@@ -33,7 +33,7 @@
             <div class="group"><span></span></div>
 
 			<div class="d-flex ai-center jc-flex-end gap-24">
-				<a href="inicio" class="cta-simple">acessar sem conta</a>
+				<a href="painel-informativo" class="cta-simple">acessar sem conta</a>
 				<button type="submit" class="cta cta-small">Conectar</button>
 			</div>
 		</form>

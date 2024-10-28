@@ -6,7 +6,7 @@
 ?>
 <h1 class="for-sreader">Painel Administrativo - Sustentech</h1>
 
-<div class="container">
+<div class="container-fluid">
     <div class="wrapper sm-margin">
     	<h2 class="ta-center">Gerenciar Empresas</h2>
 

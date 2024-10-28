@@ -9,7 +9,7 @@ function ClickEvents() {
     $('.open-modal').on('click', function (event) {
         event.preventDefault(); //desabilita a ação do botão
         var reference = $(this).val(); // armazena o valor do botão para referenciar o modal que será aberto
-        $('.modal#'+reference).fadeIn().removeClass('hide'); // Transição para abrir modal
+        $('.modal#'+reference).css('display', 'flex').hide().fadeIn().removeClass('hide'); // Transição para abrir modal
     });
 
     // Fechar modal
@@ -459,23 +459,33 @@ function drawChartProjecoes () {
     formatMeters.format(dataChartProjection, 1);
     formatMeters.format(dataChartProjection, 2);
     formatCurrency.format(dataChartProjection, 3);
+    formatCurrency.format(dataChartProjection, 4);
 
     optionChartProjection = {
         title: 'Gráfico de Projeções',
         curveType: 'function',
         legend: { position: 'bottom' },
+        width: 950,
+        height: 450,
+        lineWidth: 4,
+        pointSize: 10,
         hAxis: { title: 'Período' },
-        vAxis: { title: 'Valores' },
+        vAxis: { 
+            title: 'Consumo/ Reutilização', 
+            baseline: 0,
+            viewWindow: { min: 0 }
+        },
         gridlines: { count: 4 },
         series: {
-            0: { color: '#45B583'},
-            1: { color: '#354F52'},
-            2: { color: '#F4A261'}
+            0: { color: '#45B583' },
+            1: { color: '#354F52' },
+            2: { color: '#ae2012' },
+            3: { color: '#F4A261' }
         }
     };
 
     chartProjection = new google.visualization.LineChart(document.querySelector('.chart-projections'));
-    filterPeriod(2);
+    filterPeriod(3);
 }
 
 function filterPeriod(period) {

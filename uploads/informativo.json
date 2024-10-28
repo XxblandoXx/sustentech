@@ -16,20 +16,35 @@
                 "text": "Pode ser utilizada em bebedouros, pias, chuveiros, torres de resfriamento, sistemas de irrigação e fontes ornamentais, descarga de vasos sanitários e entre outros."
             }
         ],
-        "tratamentos": [
-            {
-                "url": "#",
-                "label": "Tratamento <br>Químico"
-            },
-            {
-                "url": "#",
-                "label": "Tratamento <br>Biológico"
-            },
-            {
-                "url": "#",
-                "label": "Tratamento <br>fisico-químico"
-            }
-        ]
+        "conteudo-adicional": {
+            "titulo": "Formas de Tratamento",
+            "tratamentos": [
+                {
+                    "url": "tratamento-quimico",
+                    "label": "Tratamento <br>Químico",
+                    "modal": {
+                        "title": "Tratamento Químico",
+                        "description": "<p>O tratamento químico envolve a adição de substâncias químicas para modificar a composição da água, focando principalmente na eliminação de contaminantes biológicos e na desinfecção, o método frequentemente usado em conjunto aos demais para potencializar a purificação</p><figure><img src=\"uploads/figura-tratamento-quimico.jpeg\" alt=\"Imagem ilustrativa do tratamento químico\" width=\"429\" height=\"256\" loading=\"lazy\"></figure>"
+                    }
+                },
+                {
+                    "url": "tratamento-biologico",
+                    "label": "Tratamento <br>Biológico",
+                    "modal": {
+                        "title": "Tratamento Biológico",
+                        "description": "<p>O tratamento biológico utiliza organismos vivos para decompor e remover contaminantes orgânicos, sendo um processo mais natural, focado na redução da carga poluente.<figure><img src=\"uploads/ilustracao-tratamento-biologico.gif\" alt=\"Imagem ilustrativa do tratamento biológico\" width=\"507\" height=\"221\" loading=\"lazy\"></figure></p>"
+                    }
+                },
+                {
+                    "url": "tratamento-fisico-quimico",
+                    "label": "Tratamento <br>Fisico-Químico",
+                    "modal": {
+                        "title": "Tratamento Fisico-Químico",
+                        "description": "<p>O tratamento físico-químico combina processos físicos (como sedimentação e filtração) com reações químicas, visando a remoção de sólidos e a melhoria da qualidade da água.</p><figure><img src=\"uploads/ilustracao-tratamento-fisico-quimico.png\" alt=\"Imagem de um pavimento impermeável\" width=\"618\" height=\"417\" loading=\"lazy\"></figure>"
+                    }
+                }
+            ]
+        }
     },
     "aproveitamento-da-chuva": {
         "title": "Aproveitamento da chuva",
@@ -40,27 +55,38 @@
                 "text": "A coleta e o uso de água da chuva reduz a dependência de fontes de água potável e promove a sustentabilidade,  garantindo um melhor gerenciamento dos recursos hídricos com menos desperdício, preservando assim o meio ambiente."
             },
             {
-                "label": "Como captar?",
-                "text": "A captação pode ser realizada através de telhados, calhas, condutores (tubos de queda), tanques de armazenamento e dentre outros."
-            },
-            {
                 "label": "Onde utilizar?",
                 "text": "Pode ser utilizada na agricultura, serviços de limpeza, descarga em vasos sanitários, lavagens que não necessitam de uma qualidade de água tão alta,  torres de resfriamento dentre outras utilizações."
             }
         ],
-        "tratamentos": [
-            {
-                "url": "#",
-                "label": "Calhas"
-            },
-            {
-                "url": "#",
-                "label": "Jardins <br>de Chuva"
-            },
-            {
-                "url": "#",
-                "label": "Pavimentos <br>Permeáveis"
-            }
-        ]
+        "conteudo-adicional": {
+            "titulo": "Formas de Captação",
+             "tratamentos": [
+                {
+                    "url": "calhas",
+                    "label": "Calhas",
+                    "modal": {
+                        "title": "Calhas",
+                        "description": "<p>São usadas para acumular a água do telhado, direcionam a água para tubos de queda, que transportam a água até os reservatórios ou sistemas de drenagem.</p><figure><img src=\"uploads/ilustracao-calhas.jpg\" alt=\"Imagem ilustrativa da captação Calhas\" width=\"650\" height=\"434\" loading=\"lazy\"><figcaption>Fonte: Stant (2020).</figcaption></figure></p>"
+                    }
+                },
+                {
+                    "url": "jardins-de-chuva",
+                    "label": "Jardins <br>de Chuva",
+                    "modal": {
+                        "title": "Jardins de Chuva",
+                        "description": "<p>A prática de paisagismo sustentável combina estética e funcionalidade através da escolha de plantas e materiais selecionados que auxiliam espaços urbanos a capturar e filtrar a água da chuva promovendo a saúde ambiental e a biodiversidade.</p><figure><img src=\"uploads/ilustracao-jardins-de-chuva.jpg\" alt=\"Imagem ilustrativa da captação Jardins de Chuva\" width=\"650\" height=\"366\" loading=\"lazy\"><figcaption>Fonte: Arte vegetal (2021).</figcaption></figure>"
+                    }
+                },
+                {
+                    "url": "pavimentos-permeaveis",
+                    "label": "Pavimentos <br>Permeáveis",
+                    "modal": {
+                        "title": "Pavimentos Permeáveis",
+                        "description": "<p>Pavimentos permeáveis são materiais como blocos de concreto permeáveis, pavimentos de grama, pedras ou asfalto poroso; projetados para permitir a infiltração da água da chuva, reduzindo o escoamento superficial e promovendo a recarga do lençol freático.</p><figure><img src=\"uploads/blocos-de-concreto.png\" alt=\"Imagem de um pavimento impermeável\" width=\"509\" height=\"547\" loading=\"lazy\"><figcaption>Fonte: ABCP (2013).</figcaption></figure><p>Podem ser instalados tanques subterrâneos, cisternas ou tanques de armazenamento para a água captada.</p>"
+                    }
+                }
+            ]
+        }
     }
 }

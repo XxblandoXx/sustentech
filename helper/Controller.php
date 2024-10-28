@@ -31,7 +31,7 @@ class Controller extends System {
         }
         else {
             if (! $this->verify_session()) {
-                header('Location: ' . BASE_URL . 'inicio');
+                header('Location: ' . BASE_URL);
                 return;
             }
         }

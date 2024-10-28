@@ -109,8 +109,6 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 							];
 						</script>
 
-						<a href="ferramentas" class="cta cta-light cta-small mt-45"><i class="icon-back"></i> Voltar</a>
-
 						<div id="update-consumption" class="modal hide">
 			                <div class="modal-content">
 			                    <div class="modal-head">
@@ -211,9 +209,14 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 					</div>
 
 					<div class="chart-view d-none">
-						<div class="chart-consumption d-flex ai-center jc-center"></div>
+						<div class="chart-consumption d-flex ai-center jc-center jc-md-flex-start"></div>
 
-						<small>Quantidade total reutilizada: <strong><?php echo $consumo->TotalReuseCompany($params['company'])['total']; ?> m³</strong></small>
+						<small>Quantidade total reutilizada: <strong><?php echo $consumo->TotalReuseCompany($params['company']); ?> m³</strong></small>
+					</div>
+
+					<div class="d-flex fw-wrap gap-12 mt-45">
+						<a href="ferramentas/monitoramento" class="cta cta-light cta-small"><i class="icon-back"></i> Voltar</a>
+						<a href="ferramentas/projecoes" class="cta cta-dark cta-small d-flex ai-center jc-center">Área de projeções</a>
 					</div>
 				<?php else: ?>
 					<h3 class="message">Você ainda não tem nenhum dado de consumo cadastrado.</h3>
@@ -292,6 +295,11 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 						</div>
 					</div>
 				</div>
+
+				<div class="d-flex fw-wrap gap-12 mt-45">
+					<a href="ferramentas" class="cta cta-light cta-small"><i class="icon-back"></i> Voltar</a>
+					<a href="ferramentas/projecoes" class="cta cta-dark cta-small d-flex ai-center jc-center">Área de projeções</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -304,10 +312,11 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 				<div class="list-companies">
 					<h3 class="ta-center mb-20">Selecione a empresa:</h3>
 
-					<div class="navigation d-flex fw-wrap fd-md-column ai-md-center jc-center">
+					<div class="navigation d-flex fw-wrap fd-column gap-16">
 				        <?php foreach ($companies as $company): ?>
-				        <a href="ferramentas/monitoramento?company=<?php echo $company['id']; ?>" class="cta cta-light">
-				            <?php echo $company['nome']; ?>
+				        <a href="ferramentas/projecoes?company=<?php echo $company['id']; ?>" class="d-flex ai-center gap-12 jc-space-between">
+				        	<span class="d-flex ai-center gap-12"><i class="icon-gear"></i><?php echo $company['nome']; ?></span>
+				            <button class="cta cta-small cta-light tt-uppercase ml-15">Selecionar</button>
 				        </a>
 				        <?php endforeach ?>
 				    </div>
@@ -315,6 +324,11 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 			<?php else: ?>
 				<h3 class="message">Você ainda não tem nenhum dado de consumo cadastrado.</h3>
 			<?php endif; ?>	
+
+			<div class="d-flex fw-wrap gap-12 mt-45">
+				<a href="ferramentas" class="cta cta-light cta-small"><i class="icon-back"></i> Voltar</a>
+				<a href="ferramentas/projecoes" class="cta cta-dark cta-small d-flex ai-center jc-center">Área de projeções</a>
+			</div>
 		</div>
 	</div>
 <?php endif ?>

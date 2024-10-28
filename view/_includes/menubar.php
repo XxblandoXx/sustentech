@@ -1,9 +1,14 @@
 <div class="menubar pos-fixed d-flex fw-wrap ai-center jc-center">
+
+	<?php if ($site->verify_session()): ?>
 	<a href="inicio" class="menu-item <?php echo $current == 'home' ? 'current' : ''; ?>">
 		<i class="icon-home"></i><span class="d-md-none">Home</span>
 	</a>
-
+	
 	<div class="gap"></div>
+
+	<?php endif; ?>
+
 
 	<a href="painel-informativo" class="menu-item <?php echo $current == 'painel-informativo' ? 'current' : ''; ?>">
 		<i class="icon-info"></i><span class="d-md-none">Painel Informativo</span>

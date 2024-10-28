@@ -36,11 +36,29 @@
         <hr>
 
         <div class="tratamentos mb-45">
-            <h3 class="ta-center mb-20">Formas de Tratamento</h3>
+            <h3 class="ta-center mb-20"><?php echo $content['conteudo-adicional']['titulo']; ?></h3>
 
             <div class="d-flex fw-wrap gap-16 jc-center">
-                <?php foreach ($content['tratamentos'] as $trt): ?>
-                    <a href="<?php echo $trt['url']; ?>" class="cta cta-dark d-flex ai-center jc-center ta-center"><?php echo $trt['label']; ?></a>
+                <?php foreach ($content['conteudo-adicional']['tratamentos'] as $trt): ?>
+                    <button type="button" value="<?php echo $trt['url']; ?>" class="cta cta-dark open-modal d-flex ai-center jc-center ta-center"><?php echo $trt['label']; ?></button>
+
+                    <div id="<?php echo $trt['url']; ?>" class="modal hide">
+                        <div class="modal-content">
+                            <div class="modal-head">
+                                <button class="close-modal d-block" value="<?php echo $trt['url']; ?>" aria-label="Fechar modal">
+                                    <i class="icon-close"></i>
+                                </button>
+
+                                <h2 class="tt-uppercase ta-center"><?php echo $trt['modal']['title']; ?></h2>
+                            </div>
+
+                            <hr>
+
+                            <div class="modal-body mt-60">
+                                <?php echo $trt['modal']['description'] ?>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -48,3 +66,4 @@
         <a href="painel-informativo" class="cta cta-light cta-small"><i class="icon-back"></i> Voltar</a>
     </div>
 </div>
+
