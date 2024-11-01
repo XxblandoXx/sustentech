@@ -117,12 +117,16 @@ function SubmitEvent() {
     $('#simulador form').on('submit', function(event) {
         event.preventDefault();
 
-        if (! $('[name="consumo"]').val()) {
-            $('[name="consumo"]').parent().addClass('error');
-            return;
-        }
+        if (! $('[name="periodo"]').val())
+            $('[name="periodo"]').parent().addClass('error');
 
-        var content = '';
+        if (! $('[name="consumo"]').val())
+            $('[name="consumo"]').parent().addClass('error');
+
+
+        if ($('.simulador form error').length) return;
+
+        /*var content = '';
         var periods = [
             {
                 "value": 1,
@@ -132,19 +136,27 @@ function SubmitEvent() {
                 "value": 3,
                 "label": "3 meses"
             }
-        ];
-        var consumo = parseFloat($('[name="consumo"]').val().replace(',', '.'));
+        ];*/
 
-        periods.forEach(function(month) {
+        /*periods.forEach(function(month) {
             content += `
             <div class="item">
                 <h3>Estimativa de ${month.label}</h3>
-                <p>Reutilização: <strong>${([consumo * 0.6] * month.value).toFixed(2)}m³</strong></p>
+                <p>Reutilização: <strong>${([consumo * 0.49] * month.value).toFixed(2)}m³</strong></p>
                 <p>Retorno obtido: <strong>R$  ${([consumo * 0.31]  * month.value).toFixed(2)}</strong></p>
             </div>
             `;
-        });
+        });*/
 
+        var consumo = parseFloat($('[name="consumo"]').val().replace(',', '.'));
+        var periodo = parseInt($('[name="periodo"]').val());
+        var content = `
+            <div class="item">
+                <h3>Estimativa de ${periodo} ${periodo > 1 ? 'meses' : 'mês'}</h3>
+                <p>Reutilização: <strong>${([consumo * 0.49] * periodo).toFixed(2)}m³</strong></p>
+                <p>Retorno obtido: <strong>R$  ${([consumo * 0.31]  * periodo).toFixed(2)}</strong></p>
+            </div>
+        `;
         $('#simulador .result').html(content);
     });
 

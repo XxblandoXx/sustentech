@@ -174,13 +174,15 @@ class Html extends BaseWriter
      */
     public function generateHtmlAll(): string
     {
+        $sheets = $this->generateSheetPrep();
+        foreach ($sheets as $sheet) {
+            $sheet->calculateArrays($this->preCalculateFormulas);
+        }
         // garbage collect
         $this->spreadsheet->garbageCollect();
 
         $saveDebugLog = Calculation::getInstance($this->spreadsheet)->getDebugLog()->getWriteDebugLog();
         Calculation::getInstance($this->spreadsheet)->getDebugLog()->setWriteDebugLog(false);
-        $saveArrayReturnType = Calculation::getArrayReturnType();
-        Calculation::setArrayReturnType(Calculation::RETURN_ARRAY_AS_VALUE);
 
         // Build CSS
         $this->buildCSS(!$this->useInlineCss);
@@ -205,7 +207,6 @@ class Html extends BaseWriter
             $html = $callback($html);
         }
 
-        Calculation::setArrayReturnType($saveArrayReturnType);
         Calculation::getInstance($this->spreadsheet)->getDebugLog()->setWriteDebugLog($saveDebugLog);
 
         return $html;
@@ -409,11 +410,9 @@ class Html extends BaseWriter
         return $html;
     }
 
+    /** @return Worksheet[] */
     private function generateSheetPrep(): array
     {
-        // Ensure that Spans have been calculated?
-        $this->calculateSpans();
-
         // Fetch sheets
         if ($this->sheetIndex === null) {
             $sheets = $this->spreadsheet->getAllSheets();
@@ -461,6 +460,8 @@ class Html extends BaseWriter
      */
     public function generateSheetData(): string
     {
+        // Ensure that Spans have been calculated?
+        $this->calculateSpans();
         $sheets = $this->generateSheetPrep();
 
         // Construct HTML
@@ -489,7 +490,7 @@ class Html extends BaseWriter
                 $html .= $startTag;
 
                 // Write row if there are HTML table cells in it
-                if ($this->shouldGenerateRow($sheet, $row) && !isset($this->isSpannedRow[$sheet->getParent()->getIndex($sheet)][$row])) {
+                if ($this->shouldGenerateRow($sheet, $row) && !isset($this->isSpannedRow[$sheet->getParentOrThrow()->getIndex($sheet)][$row])) {
                     // Start a new rowData
                     $rowData = [];
                     // Loop through columns
@@ -621,6 +622,14 @@ class Html extends BaseWriter
         // Write images
         $drawing = $this->sheetDrawings[$coordinates] ?? null;
         if ($drawing !== null) {
+            $opacity = '';
+            $opacityValue = $drawing->getOpacity();
+            if ($opacityValue !== null) {
+                $opacityValue = $opacityValue / 100000;
+                if ($opacityValue >= 0.0 && $opacityValue <= 1.0) {
+                    $opacity = "opacity:$opacityValue; ";
+                }
+            }
             $filedesc = $drawing->getDescription();
             $filedesc = $filedesc ? htmlspecialchars($filedesc, ENT_QUOTES) : 'Embedded image';
             if ($drawing instanceof Drawing && $drawing->getPath() !== '') {
@@ -654,7 +663,7 @@ class Html extends BaseWriter
                     }
                 }
 
-                $html .= '<img style="position: absolute; z-index: 1; left: '
+                $html .= '<img style="' . $opacity . 'position: absolute; z-index: 1; left: '
                     . $drawing->getOffsetX() . 'px; top: ' . $drawing->getOffsetY() . 'px; width: '
                     . $drawing->getWidth() . 'px; height: ' . $drawing->getHeight() . 'px;" src="'
                     . $imageData . '" alt="' . $filedesc . '" />';
@@ -677,7 +686,7 @@ class Html extends BaseWriter
                     //    Its use here is suspect and is being eliminated.
                     //  width: X sets width of supplied image.
                     //  As a result, images bigger than cell will be contained and images smaller will not get stretched
-                    $html .= '<img alt="' . $filedesc . '" src="' . $dataUri . '" style="width:' . $drawing->getWidth() . 'px;left: '
+                    $html .= '<img alt="' . $filedesc . '" src="' . $dataUri . '" style="' . $opacity . 'width:' . $drawing->getWidth() . 'px;left: '
                         . $drawing->getOffsetX() . 'px; top: ' . $drawing->getOffsetY() . 'px;position: absolute; z-index: 1;" />';
                 }
             }

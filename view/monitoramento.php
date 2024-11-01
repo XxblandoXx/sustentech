@@ -11,7 +11,7 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 ?>
 
 <?php if (isset($params['company'])): ?>
-	<div class="monitoramento container-fluid">
+	<div class="monitoramento container-fluid-x">
 		<div class="wrapper sm-margin">
 			<h2 class="ta-center">Área de Monitoramento</h2><hr>
 			<?php $consumption = $consumo->getAllConsumption($params['company']); ?>
@@ -211,12 +211,7 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 					<div class="chart-view d-none">
 						<div class="chart-consumption d-flex ai-center jc-center jc-md-flex-start"></div>
 
-						<small>Quantidade total reutilizada: <strong><?php echo $consumo->TotalReuseCompany($params['company']); ?> m³</strong></small>
-					</div>
-
-					<div class="d-flex fw-wrap gap-12 mt-45">
-						<a href="ferramentas/monitoramento" class="cta cta-light cta-small"><i class="icon-back"></i> Voltar</a>
-						<a href="ferramentas/projecoes" class="cta cta-dark cta-small d-flex ai-center jc-center">Área de projeções</a>
+						<small class="d-block ta-center">Quantidade total reutilizada: <strong><?php echo $consumo->TotalReuseCompany($params['company']); ?> m³</strong></small>
 					</div>
 				<?php else: ?>
 					<h3 class="message">Você ainda não tem nenhum dado de consumo cadastrado.</h3>
@@ -314,7 +309,7 @@ if (count($companies) == 1) $params['company'] = $companies[0]['id'];
 
 					<div class="navigation d-flex fw-wrap fd-column gap-16">
 				        <?php foreach ($companies as $company): ?>
-				        <a href="ferramentas/projecoes?company=<?php echo $company['id']; ?>" class="d-flex ai-center gap-12 jc-space-between">
+				        <a href="ferramentas/monitoramento?company=<?php echo $company['id']; ?>" class="d-flex ai-center gap-12 jc-space-between">
 				        	<span class="d-flex ai-center gap-12"><i class="icon-gear"></i><?php echo $company['nome']; ?></span>
 				            <button class="cta cta-small cta-light tt-uppercase ml-15">Selecionar</button>
 				        </a>
