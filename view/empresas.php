@@ -261,7 +261,7 @@
                         </div>
 
                         <div class="d-flex fw-wrap jc-flex-end gap-16 mt-45">
-                            <button type="button" class="modal-close cta cta-light">Cancelar</button>
+                            <button type="button" class="close-modal cta cta-light" value="add-company">Cancelar</button>
                             <button type="submit" class="cta">Salvar</button>
                         </div>
                     </form>

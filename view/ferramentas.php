@@ -65,7 +65,10 @@
 					</div>
 				</div>
 
-				<button type="submit" class="cta mb-20 mt-10 col-12">Calcular</button>
+				<div class="d-flex fw-wrap jc-flex-end gap-16 mt-45">
+                    <button type="button" class="close-modal cta cta-light cta-small" value="simulador">Cancelar</button>
+                    <button type="submit" class="cta cta-small">Calcular</button>
+                </div>
 			</form>
 
 			<div class="result"></div>
